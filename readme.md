@@ -58,26 +58,23 @@ Get help from other React users:
 
 _If you have other helpful links to share, or find any of the links above no longer work, please [let us know](https://github.com/tastejs/todomvc/issues)._
 
-
-
 ## Running
 
 A standalone TypeScript compiler is available on NPM.
 
-	npm install typescript
+    npm install typescript
 
 To compile the TypeScript in this project:
 
-	# from examples/typescript-react
-	$ ./node_modules/typescript/bin/tsc -p ./js/
+    $ node ./node_modules/typescript/bin/tsc -p ./js/
 
 To be able to run the output JS files in the browser:
 
-	# from examples/typescript-react
-	$ ./node_modules/browserify/bin/cmd ./js/app.js -o ./js/bundle.js"
+
+    $ node ./node_modules/browserify/bin/cmd ./js/app.js -o ./js/bundle.js
 
 To run the app, spin up an HTTP server (e.g. `python -m SimpleHTTPServer`) and visit http://localhost/.../myexample/.
 Alternatively you can run:
 
-	# from examples/typescript-react
-	$ npm run start
+   
+    $ npm run start
