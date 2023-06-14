@@ -1,8 +1,10 @@
 {
   "private": true,
   "scripts": {
-    "build": "./node_modules/typescript/bin/tsc -p ./js/ && node ./node_modules/browserify/bin/cmd ./js/app.js -o ./js/bundle.js",
-    "start": "node ./serve.js"
+    "build": "node ./node_modules/typescript/bin/tsc -p ./js/ && node ./node_modules/browserify/bin/cmd ./js/app.js -o ./js/bundle.js",
+    "start": "node ./serve.js",
+    "cy:open": "npx cypress open",
+    "cy:test": "npx cypress run cypress/e2e/*feature"
   },
   "dependencies": {
     "@types/classnames": "^2.2.6",
@@ -20,8 +22,14 @@
     "todomvc-common": "^1.0.1"
   },
   "devDependencies": {
+    "@badeball/cypress-cucumber-preprocessor": "^18.0.0",
+    "@bahmutov/cypress-esbuild-preprocessor": "^2.2.0",
     "browserify": "^16.2.3",
+    "cypress": "^12.14.0",
     "serve-static": "^1.15.0",
     "typescript": "^2.9.2"
+  },
+  "cypress-cucumber-preprocessor": {
+    "stepDefinitions": "cypress/support/step_definitions/**/*.js"
   }
 }
