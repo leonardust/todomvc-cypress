@@ -180,7 +180,7 @@ Add in script section of **package.json** to generate multiple-cucumber-html-rep
 "cy:report": "node ./cypress/reports/multiple-cucumber-html-reporter/multiple-cucumber-report.js"
 ```
 
-![Report](../report.png)
+#### Example report
 
 
 ![Multiple Cucumber HTML Report](../pictures/multiple-cucumber-html-reporter.png)
