@@ -145,7 +145,7 @@ To create html reports add to the **package.json** in **"cypress-cucumber-prepro
 
 ##### JSON Reports
 
-To create json reports add to the **package.json** in **"cypress-cucumber-preprocessor"** section
+To create [json reports](https://github.com/badeball/cypress-cucumber-preprocessor/blob/master/docs/json-report.md) add to the **package.json** in **"cypress-cucumber-preprocessor"** section
 
 ```json
 "json": {
