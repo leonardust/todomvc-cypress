@@ -4,7 +4,8 @@
     "build": "node ./node_modules/typescript/bin/tsc -p ./js/ && node ./node_modules/browserify/bin/cmd ./js/app.js -o ./js/bundle.js",
     "start": "node ./serve.js",
     "cy:open": "npx cypress open",
-    "cy:test": "npx cypress run cypress/e2e/*feature"
+    "cy:test": "npx cypress run cypress/e2e/*feature",
+    "cy:report": "node ./cypress/reports/multiple-cucumber-html-reporter/multiple-cucumber-report.js"
   },
   "dependencies": {
     "@types/classnames": "^2.2.6",
@@ -26,10 +27,23 @@
     "@bahmutov/cypress-esbuild-preprocessor": "^2.2.0",
     "browserify": "^16.2.3",
     "cypress": "^12.14.0",
+    "multiple-cucumber-html-reporter": "^3.4.0",
     "serve-static": "^1.15.0",
     "typescript": "^2.9.2"
   },
   "cypress-cucumber-preprocessor": {
-    "stepDefinitions": "cypress/support/step_definitions/**/*.js"
+    "stepDefinitions": "cypress/support/step_definitions/**/*.js",
+    "html": {
+      "enabled": true,
+      "output": "cypress/reports/cucumber-html/cucumber-report.html"
+    },
+    "messages": {
+      "enabled": true,
+      "output": "cypress/reports/cucumber-ndjson/cucumber-report.ndjson"
+    },
+    "json": {
+      "enabled": true,
+      "output": "cypress/reports/cucumber-json/cucumber-report.json"
+    }
   }
 }

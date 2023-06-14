@@ -14,7 +14,7 @@ Install npx package to executes  either from a local node_modules/.bin
 npm install -g npx
 ```
 
-Create and configure tsconfig.json file inside your cypress folder
+Create and configure **tsconfig.json** file inside your cypress folder
 
 ```json
 {
@@ -34,21 +34,25 @@ _[Material Icon Theme](https://marketplace.visualstudio.com/items?itemName=PKief
 
 _[Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)_ - Code formatter
 
-To add prettier as default formatter add this code to the settings.json
+To add prettier as default formatter add this code to the **settings.json**
 
-`"editor.defaultFormatter": "esbenp.prettier-vscode"`
+```json
+"editor.defaultFormatter": "esbenp.prettier-vscode"
+```
 
 _[Cucumber (Gherkin) Full Support](https://marketplace.visualstudio.com/items?itemName=alexkrechik.cucumberautocomplete)_
 
 # Cucumber setup
 
-To install cucumber dependencies follow _[@badeball/cypress-cucumber-preprocesor](https://www.npmjs.com/package/@badeball/cypress-cucumber-preprocessor)_ or execute command below
+### Install dependencies
+
+1. Install cucumber dependencies follow _[@badeball/cypress-cucumber-preprocesor](https://www.npmjs.com/package/@badeball/cypress-cucumber-preprocessor)_ or execute command below
 
 ```sh
 npm install --save-dev @badeball/cypress-cucumber-preprocessor
 ```
 
-According to the _[quick-start.md](https://github.com/badeball/cypress-cucumber-preprocessor/blob/master/docs/quick-start.md#example-setup)_ Replace content of the cypress.config.ts file by code below
+According to the _[quick-start.md](https://github.com/badeball/cypress-cucumber-preprocessor/blob/master/docs/quick-start.md#example-setup)_ Replace content of the **cypress.config.ts** file by code below
 
 ```ts
 import { defineConfig } from "cypress";
@@ -81,13 +85,17 @@ export default defineConfig({
 
 ```
 
+In case of errors in **cypress.config.ts** shown below:
+
+![Missing dependencies](../pictures/missing_dependencies.png)
+
 Install missing dependencies
 
 ```sh
 npm install --save-dev @bahmutov/cypress-esbuild-preprocessor
 ```
 
-Fix import error for `@badeball/cypress-cucumber-preprocessor/esbuild` add to tsconfig.json
+and fix import error for `@badeball/cypress-cucumber-preprocessor/esbuild` by adding to **tsconfig.json**
 
 ```json
 {
@@ -99,3 +107,80 @@ Fix import error for `@badeball/cypress-cucumber-preprocessor/esbuild` add to ts
 }
 
 ```
+
+### Configure step definition
+
+Add configuration to the **settings.json**
+
+```json
+"cucumberautocomplete.customParameters": [],
+"cucumberautocomplete.strictGherkinCompletion": true,
+"cucumberautocomplete.steps": ["cypress/support/step_definitions/*.js"]
+```
+
+Add configuration to the **package.json**
+
+```json
+"cypress-cucumber-preprocessor": {
+    "stepDefinitions": "cypress/support/step_definitions/**/*.js"   
+}
+```
+
+Create stepdefinition folder in **cypress/support/step_definitions/** folder
+
+##### HTML Reports
+
+To create html reports add to the **package.json** in **"cypress-cucumber-preprocessor"** section
+
+```json
+"html": {
+      "enabled": true,
+      "output": "cypress/reports/cucumber-html/cucumber-report.html"
+},
+"messages": {
+      "enabled": true,
+      "output": "cypress/reports/cucumber-ndjson/cucumber-report.ndjson"
+},
+```
+
+##### JSON Reports
+
+To create json reports add to the **package.json** in **"cypress-cucumber-preprocessor"** section
+
+```json
+"json": {
+      "enabled": true,
+      "output": "cypress/reports/cucumber-json/cucumber-report.json"
+}
+```
+
+#### Multiple Cucumber HTML Report
+
+Install [multiple-cucumber-html-reporter](https://github.com/WasiqB/multiple-cucumber-html-reporter) dependencies
+
+```sh
+npm install multiple-cucumber-html-reporter --save-dev
+```
+
+Create **multiple-cucumber-report.js** file in cypress/reports/multiple-cucumber-report.js and provide **jsonDir(folder)** where cucumber-report.json is
+and specify path to the report folder **reportPath** 
+
+```js
+const report = require("multiple-cucumber-html-reporter");
+
+report.generate({
+  jsonDir: "./cypress/reports/cucumber-json/",
+  reportPath: "./cypress/reports/cucumber-report/",
+});
+```
+
+Add in script section of **package.json** to generate multiple-cucumber-html-report
+
+```json
+"cy:report": "node ./cypress/reports/multiple-cucumber-html-reporter/multiple-cucumber-report.js"
+```
+
+![Report](../report.png)
+
+
+![Multiple Cucumber HTML Report](../pictures/multiple-cucumber-html-reporter.png)
