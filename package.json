@@ -1,4 +1,9 @@
 {
+  "name": "todomvc-cypress-cucumber",
+  "version": "1.0.0",
+  "engines": {
+    "node": "18"
+  },
   "private": true,
   "scripts": {
     "build": "node ./node_modules/typescript/bin/tsc -p ./js/ && node ./node_modules/browserify/bin/cmd ./js/app.js -o ./js/bundle.js",
