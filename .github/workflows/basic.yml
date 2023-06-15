@@ -20,3 +20,10 @@ jobs:
           install-command: npm install
           build: npm run build
           start: npm start
+      - name: Generate report
+        run: npm run cy:report
+      - name: Upload report
+        uses: actions/upload-artifact@v3
+        with:
+          name: cypress-cucumber-report
+          path: cypress/reports/cucumber-report/
