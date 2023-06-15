@@ -9,7 +9,7 @@ node -v
 
 ```
 
-If node missing install node v16.16.0 (LTS) from [nodejs.org]() 
+If node missing install node v16.16.0 (LTS) from [nodejs.org](https://nodejs.org/en/blog/release/v16.16.0) 
 
 To install cypress follow _[Cypress - installing cypress](https://docs.cypress.io/guides/getting-started/installing-cypress)_ or perform command below
 
