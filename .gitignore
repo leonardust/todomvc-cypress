@@ -6,3 +6,6 @@ node_modules
 
 #report
 **/reports
+
+#ide
+.vscode
