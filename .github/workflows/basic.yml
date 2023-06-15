@@ -47,6 +47,8 @@ jobs:
           start: npm start
           continue-on-error: true
       - name: Generate report
+        if: always()
+        continue-on-error: true
         run: npm run cy:report
       - name: Upload report
         uses: actions/upload-artifact@v3
