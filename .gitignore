@@ -1,1 +1,11 @@
 node_modules
+
+# output
+**/screenshots
+**/videos
+
+#report
+**/reports
+
+#ide
+.vscode
