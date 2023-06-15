@@ -1,5 +1,22 @@
 name: End-to-end tests
-on: [workflow_dispatch, push]
+on:
+  workflow_dispatch:
+    inputs:
+      browser:
+        type: choice
+          description: Select browser
+          default: electron
+          options:
+            - chrome
+            - firefox
+            - edge
+
+  push:
+    branches: [main]
+
+env:
+  BROWSER: ${{ github.event.inputs.browser || 'chrome' }}
+
 jobs:
   cypress-run:
     runs-on: ubuntu-22.04
@@ -17,6 +34,7 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v5
         with:
+          browser: ${{github.event.inputs.browser || 'electron'}}
           install-command: npm install
           build: npm run build
           start: npm start
@@ -27,3 +45,7 @@ jobs:
         with:
           name: cypress-cucumber-report
           path: cypress/reports/cucumber-report/
+      - name: Write summary
+        if: always()
+        run: |
+          echo "- Browser: $BROWSER" >> $GITHUB_STEP_SUMMARY
