@@ -4,12 +4,12 @@ on:
     inputs:
       browser:
         type: choice
-          description: Select browser
-          default: electron
-          options:
-            - chrome
-            - firefox
-            - edge
+        description: Select browser
+        default: electron
+        options:
+          - chrome
+          - firefox
+          - edge
 
   push:
     branches: [main]
