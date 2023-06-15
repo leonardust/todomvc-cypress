@@ -181,7 +181,7 @@ npm install multiple-cucumber-html-reporter --save-dev
 
 ```
 
-Create **multiple-cucumber-report.js** file in cypress/reports/multiple-cucumber-report.js and provide **jsonDir(folder)** where cucumber-report.json is
+Create **multiple-cucumber-report-config.js** file in cypress folder and provide **jsonDir(folder)** where cucumber-report.json is
 and specify path to the report folder **reportPath**
 
 ```js
@@ -196,7 +196,7 @@ report.generate({
 Add in script section of **package.json** to generate multiple-cucumber-html-report
 
 ```json
-"cy:report": "node ./cypress/reports/multiple-cucumber-html-reporter/multiple-cucumber-report.js"
+"cy:report": "node ./cypress/multiple-cucumber-report-config.js"
 ```
 
 #### Example report
