@@ -1,3 +1,4 @@
+@regression
 Feature: Managing todo list 
 
     Scenario: User is able to add todo item
