@@ -61,4 +61,4 @@ jobs:
         if: always()
         run: |
           echo "- Browser: $BROWSER" >> $GITHUB_STEP_SUMMARY
-          echo "Cucumber report link: https://leonardust.github.io/todomvc-cypress/" >> $GITHUB_STEP_SUMMARY
+          echo "- Cucumber report: https://leonardust.github.io/todomvc-cypress/" >> $GITHUB_STEP_SUMMARY
