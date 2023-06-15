@@ -10,7 +10,7 @@
     "start": "node ./serve.js",
     "cy:open": "npx cypress open",
     "cy:test": "npx cypress run cypress/e2e/*feature",
-    "cy:report": "node ./cypress/reports/multiple-cucumber-html-reporter/multiple-cucumber-report.js"
+    "cy:report": "node ./cypress/multiple-cucumber-report-config.js"
   },
   "dependencies": {
     "@types/classnames": "^2.2.6",
