@@ -2,18 +2,20 @@
 
 # Cypress installation and configuration
 
-Check node version 
+Check node version
 
 ```sh
 node -v
+
 ```
 
-If node missing install from 
+If node missing install node v16.16.0 (LTS) from [nodejs.org]() 
 
 To install cypress follow _[Cypress - installing cypress](https://docs.cypress.io/guides/getting-started/installing-cypress)_ or perform command below
 
 ```sh
 npm install cypress --save-dev
+
 
 ```
 
@@ -21,6 +23,7 @@ Install npx package to executes  either from a local node_modules/.bin
 
 ```sh
 npm install -g npx
+
 
 ```
 
@@ -60,6 +63,7 @@ _[Cucumber (Gherkin) Full Support](https://marketplace.visualstudio.com/items?it
 
 ```sh
 npm install --save-dev @badeball/cypress-cucumber-preprocessor@16.0.3
+
 
 ```
 
@@ -104,6 +108,7 @@ Install missing dependencies
 
 ```sh
 npm install --save-dev @bahmutov/cypress-esbuild-preprocessor
+
 
 ```
 
@@ -172,6 +177,7 @@ Install [multiple-cucumber-html-reporter](https://github.com/WasiqB/multiple-cuc
 
 ```sh
 npm install multiple-cucumber-html-reporter --save-dev
+
 
 ```
 
