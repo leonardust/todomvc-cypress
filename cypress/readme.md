@@ -2,16 +2,26 @@
 
 # Cypress installation and configuration
 
+Check node version 
+
+```sh
+node -v
+```
+
+If node missing install from 
+
 To install cypress follow _[Cypress - installing cypress](https://docs.cypress.io/guides/getting-started/installing-cypress)_ or perform command below
 
 ```sh
 npm install cypress --save-dev
+
 ```
 
 Install npx package to executes  either from a local node_modules/.bin
 
 ```sh
 npm install -g npx
+
 ```
 
 Create and configure **tsconfig.json** file inside your cypress folder
@@ -49,10 +59,11 @@ _[Cucumber (Gherkin) Full Support](https://marketplace.visualstudio.com/items?it
 1. Install cucumber dependencies follow _[@badeball/cypress-cucumber-preprocesor](https://www.npmjs.com/package/@badeball/cypress-cucumber-preprocessor)_ or execute command below
 
 ```sh
-npm install --save-dev @badeball/cypress-cucumber-preprocessor
+npm install --save-dev @badeball/cypress-cucumber-preprocessor@16.0.3
+
 ```
 
-According to the _[quick-start.md](https://github.com/badeball/cypress-cucumber-preprocessor/blob/master/docs/quick-start.md#example-setup)_ Replace content of the **cypress.config.ts** file by code below
+According to the _[quick-start.md](https://github.com/badeball/cypress-cucumber-preprocessor/blob/master/docs/quick-start.md#example-setup)_ Replace content of the __cypress.config.ts__ file by code below
 
 ```ts
 import { defineConfig } from "cypress";
@@ -93,6 +104,7 @@ Install missing dependencies
 
 ```sh
 npm install --save-dev @bahmutov/cypress-esbuild-preprocessor
+
 ```
 
 and fix import error for `@badeball/cypress-cucumber-preprocessor/esbuild` by adding to **tsconfig.json**
@@ -126,7 +138,7 @@ Add configuration to the **package.json**
 }
 ```
 
-Create stepdefinition folder in **cypress/support/step_definitions/** folder
+Create stepdefinition folder in __cypress/support/step_definitions/__ folder
 
 ##### HTML Reports
 
@@ -160,10 +172,11 @@ Install [multiple-cucumber-html-reporter](https://github.com/WasiqB/multiple-cuc
 
 ```sh
 npm install multiple-cucumber-html-reporter --save-dev
+
 ```
 
 Create **multiple-cucumber-report.js** file in cypress/reports/multiple-cucumber-report.js and provide **jsonDir(folder)** where cucumber-report.json is
-and specify path to the report folder **reportPath** 
+and specify path to the report folder **reportPath**
 
 ```js
 const report = require("multiple-cucumber-html-reporter");
@@ -181,6 +194,5 @@ Add in script section of **package.json** to generate multiple-cucumber-html-rep
 ```
 
 #### Example report
-
 
 ![Multiple Cucumber HTML Report](../pictures/multiple-cucumber-html-reporter.png)
