@@ -45,7 +45,6 @@ jobs:
           install-command: npm install
           build: npm run build
           start: npm start
-          continue-on-error: true
       - name: Generate report
         if: always()
         continue-on-error: true
