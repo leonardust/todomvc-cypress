@@ -17,5 +17,5 @@ Then(`I should see new todo item`, () => {
 });
 
 Then(`I should todo item marked as complete`, () => {
-  cy.get(".todo-list li .toggle:checked + label").contains("pupa");
+  cy.get(".todo-list li .toggle:checked + label").contains("Dupa");
 });
