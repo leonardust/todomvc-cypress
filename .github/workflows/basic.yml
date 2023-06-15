@@ -52,7 +52,7 @@ jobs:
         with:
           name: cypress-cucumber-report
           path: cypress/reports/cucumber-report/
-      - name: deploy report to gh-pages
+      - name: Deploy report to gh-pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -61,3 +61,4 @@ jobs:
         if: always()
         run: |
           echo "- Browser: $BROWSER" >> $GITHUB_STEP_SUMMARY
+          echo "Cucumber report link: https://leonardust.github.io/todomvc-cypress/"
