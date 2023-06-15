@@ -67,7 +67,7 @@ jobs:
           curl -X POST https://c4j.cucumber.io/ci/rest/api/results \
           -H "authorization: Bearer ${{ secrets.C4J_TOKEN }}" \
           -H 'content-type: multipart/form-data' \
-          -F results_file=@cucumber-report.json \
+          -F results_file=@./cypress/reports/cucumber-json/cucumber-report.json \
           -F language=js
       - name: Write summary
         if: always()
