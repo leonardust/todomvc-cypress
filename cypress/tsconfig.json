@@ -5,7 +5,6 @@
         "./node_modules/@badeball/cypress-cucumber-preprocessor/dist/subpath-entrypoints/*"
       ]
     },
-    "target": "es5",
     "lib": ["es5", "dom"],
     "types": ["cypress", "node"]
   },

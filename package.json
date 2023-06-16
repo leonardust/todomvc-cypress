@@ -13,7 +13,6 @@
     "cy:report": "node ./cypress/multiple-cucumber-report-config.js"
   },
   "dependencies": {
-    "@types/classnames": "^2.2.6",
     "@types/react": "^16.7.0",
     "@types/react-dom": "^16.0.11",
     "classnames": "^2.2.6",
