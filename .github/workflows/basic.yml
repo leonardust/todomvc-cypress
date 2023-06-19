@@ -28,39 +28,45 @@ jobs:
     steps:
       - name: Clear npm cache
         run: npm cache clean --force
+
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
           node-version: 16.x
+
       - name: Checkout
         uses: actions/checkout@v3
-      # Install npm dependencies, cache them correctly
-      # and run all Cypress tests
+
       - name: Cypress info
         run: npx cypress info
+
       - name: Cypress run
         uses: cypress-io/github-action@v5
         with:
-          browser: ${{github.event.inputs.browser || 'electron'}}
+          browser: ${{env.BROWSER || 'electron'}}
           install-command: npm install
           build: npm run build
           start: npm start
+
       - name: Generate report
         if: always()
         continue-on-error: true
         run: npm run cy:report
+
       - name: Upload report
         if: always()
         uses: actions/upload-artifact@v3
         with:
           name: cypress-cucumber-report
           path: cypress/reports/cucumber-report/
+
       - name: Deploy report to gh-pages
         if: always()
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./cypress/reports/cucumber-report
+
       - name: Push results to jira
         if: always()
         run: |
@@ -69,6 +75,7 @@ jobs:
           -H 'content-type: multipart/form-data' \
           -F results_file=@./cypress/reports/cucumber-json/cucumber-report.json \
           -F language=js
+
       - name: Write summary
         if: always()
         run: |
