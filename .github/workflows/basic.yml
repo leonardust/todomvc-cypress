@@ -7,7 +7,7 @@ on:
       browser:
         type: choice
         description: Select browser
-        default: electron
+        default: chrome
         options:
           - electron
           - chrome
@@ -36,12 +36,6 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@v3
-
-      - name: Cypress info
-        id: cypress-info
-        run: |
-          echo "::set-output name=cypress-version::$(npx -q cypress --version)"
-          echo "::set-output name=node-version::$(node --version)"
 
       - name: Cypress run
         uses: cypress-io/github-action@v5
