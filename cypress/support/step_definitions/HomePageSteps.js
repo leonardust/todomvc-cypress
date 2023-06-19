@@ -1,4 +1,9 @@
-import { Given, When, Then } from "@badeball/cypress-cucumber-preprocessor";
+import {
+  Given,
+  When,
+  Then,
+  After,
+} from "@badeball/cypress-cucumber-preprocessor";
 
 Given(`I navigate to the todo home page`, () => {
   cy.visit("http://localhost:4200");
@@ -18,4 +23,8 @@ Then(`I should see new todo item`, () => {
 
 Then(`I should todo item marked as complete`, () => {
   cy.get(".todo-list li .toggle:checked + label").contains("pupa");
+});
+
+After(() => {
+  cy.writeFile("browserDetails.json", Cypress.browser);
 });

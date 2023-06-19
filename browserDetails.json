@@ -1,0 +1,12 @@
+{
+  "name": "chrome",
+  "family": "chromium",
+  "channel": "stable",
+  "displayName": "Chrome",
+  "version": "114.0.5735.134",
+  "path": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+  "minSupportedVersion": 64,
+  "majorVersion": "114",
+  "isHeadless": true,
+  "isHeaded": false
+}

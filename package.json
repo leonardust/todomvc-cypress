@@ -9,8 +9,8 @@
     "build": "node ./node_modules/typescript/bin/tsc -p ./js/ && node ./node_modules/browserify/bin/cmd ./js/app.js -o ./js/bundle.js",
     "start": "node ./serve.js",
     "cy:open": "npx cypress open",
-    "cy:test": "npx cypress run cypress/e2e/*feature",
-    "cy:report": "node ./cypress/multiple-cucumber-report-config.js"
+    "cy:test": "npx cypress run --browser chrome --spec 'cypress/e2e/*feature'",
+    "cy:report": "node ./multiple-cucumber-report-config.js"
   },
   "dependencies": {
     "@types/react": "^16.7.0",
@@ -29,6 +29,7 @@
   "devDependencies": {
     "@badeball/cypress-cucumber-preprocessor": "^16.0.0",
     "@bahmutov/cypress-esbuild-preprocessor": "^2.2.0",
+    "browser-detect": "^0.2.28",
     "browserify": "^16.2.3",
     "cypress": "^12.14.0",
     "multiple-cucumber-html-reporter": "^3.4.0",

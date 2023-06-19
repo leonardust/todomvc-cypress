@@ -19,8 +19,6 @@ on:
 
 env:
   BROWSER: ${{ github.event.inputs.browser || 'electron' }}
-  CYPRESS_VERSION: ${{ steps.cypress-info.outputs.cypress-version }}
-  NODE_VERSION: ${{ steps.cypress-info.outputs.node-version }}
 
 jobs:
   cypress-run:
@@ -86,5 +84,3 @@ jobs:
         run: |
           echo "- Browser: $BROWSER" >> $GITHUB_STEP_SUMMARY
           echo "- Cucumber report: https://leonardust.github.io/todomvc-cypress/" >> $GITHUB_STEP_SUMMARY
-          echo "- Cypress Version: $CYPRESS_VERSION" >> $GITHUB_STEP_SUMMARY
-          echo "- Node Version: $NODE_VERSION" >> $GITHUB_STEP_SUMMARY

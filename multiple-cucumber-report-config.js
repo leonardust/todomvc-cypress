@@ -1,13 +1,15 @@
 const report = require("multiple-cucumber-html-reporter");
-
-const browserName = process.env.BROWSER_NAME || "unknown-browser";
-const browserVersion = process.env.BROWSER_VERSION || "unknown-version";
-const device = process.env.DEVICE || "unknown-device";
-const platformName = process.env.PLATFORM_NAME || "unknown-platform";
-const platformVersion = process.env.PLATFORM_VERSION || "unknown-version";
-
 const cypressVersion = require("cypress/package.json").version;
 const nodeVersion = process.version;
+const fs = require("fs");
+const os = require("node:os");
+
+function getBrowserDetails() {
+  const fileContent = fs.readFileSync("./browserDetails.json", "utf-8");
+  return JSON.parse(fileContent);
+}
+
+const browserDetails = getBrowserDetails();
 
 report.generate({
   jsonDir: "./cypress/reports/cucumber-json/",
@@ -17,13 +19,13 @@ report.generate({
   displayReportTime: true,
   metadata: {
     browser: {
-      name: browserName,
-      version: browserVersion,
+      name: browserDetails.name || "unknown-browser",
+      version: browserDetails.version || "unknown-version",
     },
-    device: device,
+    device: os.type() || "unknown-type",
     platform: {
-      name: platformName,
-      version: platformVersion,
+      name: os.platform() || "unknown-platform",
+      version: os.version() || "unknown-version",
     },
   },
   customData: {
