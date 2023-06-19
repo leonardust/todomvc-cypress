@@ -18,7 +18,7 @@ on:
     branches: [main]
 
 env:
-  BROWSER: ${{ github.event.inputs.browser || 'electron' }}
+  BROWSER: ${{ github.event.inputs.browser || 'chrome' }}
 
 jobs:
   cypress-run:
@@ -40,7 +40,7 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v5
         with:
-          browser: ${{env.BROWSER || 'electron'}}
+          browser: ${{env.BROWSER || 'chrome'}}
           install-command: npm install
           build: npm run build
           start: npm start
