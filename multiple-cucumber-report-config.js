@@ -19,12 +19,12 @@ report.generate({
   displayReportTime: true,
   metadata: {
     browser: {
-      name: browserDetails.name || "unknown-browser",
-      version: browserDetails.version || "unknown-version",
+      name: browserDetails.name || "electron",
+      version: browserDetails.majorVersion || "unknown-version",
     },
-    device: os.type() || "unknown-type",
+    device: os.platform() || "unknown-platform",
     platform: {
-      name: os.platform() || "unknown-platform",
+      name: os.type() || "unknown-type",
       version: os.version() || "unknown-version",
     },
   },
