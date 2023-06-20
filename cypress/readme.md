@@ -9,7 +9,7 @@ node -v
 
 ```
 
-If node missing install node v16.16.0 (LTS) from [nodejs.org](https://nodejs.org/en/blog/release/v16.16.0) 
+If node missing install node v16.16.0 (LTS) from [nodejs.org](https://nodejs.org/en/blog/release/v16.16.0)
 
 To install cypress follow _[Cypress - installing cypress](https://docs.cypress.io/guides/getting-started/installing-cypress)_ or perform command below
 
@@ -202,3 +202,31 @@ Add in script section of **package.json** to generate multiple-cucumber-html-rep
 #### Example report
 
 ![Multiple Cucumber HTML Report](../pictures/multiple-cucumber-html-reporter.png)
+
+### Customize report metadata and custom data
+
+Import keyword `After` and create step to write browser information to file `browserDetails.json` in root folder.
+
+```typescript
+import { After } from "@badeball/cypress-cucumber-preprocessor";
+
+After(() => {
+  cy.writeFile("browserDetails.json", Cypress.browser);
+});
+```
+
+Create function to read `browserDetails.json` and return json parsed content.
+
+```typescript
+function getBrowserDetails() {
+  const fileContent = fs.readFileSync("./browserDetails.json", "utf-8");
+  return JSON.parse(fileContent);
+}
+```
+
+Create variable to store browser details and use them to pass information in metadata
+
+```typescript
+const browserDetails = getBrowserDetails();
+```
+
