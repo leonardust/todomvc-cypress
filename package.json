@@ -9,8 +9,9 @@
     "build": "node ./node_modules/typescript/bin/tsc -p ./js/ && node ./node_modules/browserify/bin/cmd ./js/app.js -o ./js/bundle.js",
     "start": "node ./serve.js",
     "cy:open": "npx cypress open",
-    "cy:test": "npx cypress run --browser chrome --spec 'cypress/e2e/*feature'",
-    "cy:report": "node ./multiple-cucumber-report-config.js"
+    "test:all": "npx cypress run --browser chrome --spec 'cypress/e2e/*feature'",
+    "test:tag": "npx cypress run -e TAGS=\"@clear-todo\"",
+    "test:report": "node ./multiple-cucumber-report-config.js"
   },
   "dependencies": {
     "@types/react": "^16.7.0",
