@@ -22,7 +22,7 @@ report.generate({
       name: browserDetails.displayName || "unknown-browser",
       version: browserDetails.majorVersion || "unknown-version",
     },
-    device: os.type() || "unknown-platform",
+    device: os.machine() || "unknown-platform",
     platform: {
       name: os.platform() || "unknown-type",
       version: os.version() || "unknown-version",
