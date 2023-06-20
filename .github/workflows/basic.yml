@@ -82,4 +82,4 @@ jobs:
       - name: Write summary
         if: always()
         run: |
-          echo "[View run in Cucumber Report] (https://leonardust.github.io/todomvc-cypress/)" >> $GITHUB_STEP_SUMMARY
+          [View run in Cucumber Report] (https://leonardust.github.io/todomvc-cypress/) >> $GITHUB_STEP_SUMMARY
