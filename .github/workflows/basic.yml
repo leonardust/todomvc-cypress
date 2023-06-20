@@ -50,7 +50,7 @@ jobs:
       - name: Generate report
         if: always()
         continue-on-error: true
-        run: npm run cy:report
+        run: npm run test:report
 
       - name: Upload report
         if: always()
