@@ -8,5 +8,9 @@
     "lib": ["es5", "dom"],
     "types": ["cypress", "node"]
   },
-  "include": ["**/*.ts"]
+  "include": [
+    "**/*.ts",
+    "support/step_definitions/common/common-assertions-steps.js",
+    "support/step_definitions/common/common-steps.js"
+  ]
 }

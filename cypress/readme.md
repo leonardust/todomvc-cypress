@@ -203,7 +203,13 @@ Add in script section of **package.json** to generate multiple-cucumber-html-rep
 
 ![Multiple Cucumber HTML Report](../pictures/multiple-cucumber-html-reporter.png)
 
-### Customize report metadata and custom data
+### Customize report 
+
+config file `multiple-cucumber-report-config.js`
+
+### Metadata
+
+#### Browser information
 
 Import keyword `After` and create step to write browser information to file `browserDetails.json` in root folder.
 
@@ -215,9 +221,15 @@ After(() => {
 });
 ```
 
+Import dependency to work with files
+
+```js
+const fs = require("fs");
+```
+
 Create function to read `browserDetails.json` and return json parsed content.
 
-```typescript
+```js
 function getBrowserDetails() {
   const fileContent = fs.readFileSync("./browserDetails.json", "utf-8");
   return JSON.parse(fileContent);
@@ -229,4 +241,54 @@ Create variable to store browser details and use them to pass information in met
 ```typescript
 const browserDetails = getBrowserDetails();
 ```
-
+
+```js
+metadata: {
+    browser: {
+      name: browserDetails.displayName || "unknown-browser",
+      version: browserDetails.majorVersion || "unknown-version",
+    }
+  }
+```  
+
+#### Device, Os and platform information
+
+Import dependency to read os information
+
+```js
+const os = require("node:os");
+```
+
+Add information about device, platform name and version
+
+```js
+metadata: {
+    device: os.hostname() || "unknown-device",
+    platform: {
+      name: os.platform() || "unknown-platform",
+      version: os.version() || "unknown-version",
+    },
+  }
+
+### Custom data
+
+To add custom data use example code snippet inside `report.generate()` function
+
+```js
+customData: {
+    title: "Run info",
+    data: [
+      { label: "Project", value: "todomvc-cucumber" },
+      { label: "Release", value: "1.0.0" },
+      { label: "Node Version", value: nodeVersion },
+      { label: "Cypress Version", value: cypressVersion },
+    ],
+  },
+```
+
+To retrieve `node` and `cypress` version import dependencies
+
+```js
+const cypressVersion = require("cypress/package.json").version;
+const nodeVersion = process.version;
+```
