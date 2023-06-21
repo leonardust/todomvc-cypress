@@ -738,21 +738,21 @@ input#darkCheck:checked ~ label>svg#moon {
                         
                             <span class="tag">@regression</span>
                         
-                            <span class="tag">@edit-todo</span>
+                            <span class="tag">@clear-todo</span>
                         
                     
                 
             </div>
             <h1>Feature:
-                <small>Edit a todo's title</small>
+                <small>Clear all completed todos</small>
             </h1>
             
                 <p>
                <p><strong>File name:</strong>
-                    edit-todo-title.feature
+                    clear-all-completed-todos.feature
                 </p>
                 <p><strong>Relative path:</strong>
-                    e2e/edit-todo-title.feature</p>
+                    e2e/clear-all-completed-todos.feature</p>
             
         </div>
 
@@ -822,7 +822,7 @@ input#darkCheck:checked ~ label>svg#moon {
         
             <tr>
                 <th> Total duration:</th>
-                <tr><td>00:00:00.782</td></tr>
+                <tr><td>00:00:00.584</td></tr>
             </tr>
         
     </table>
@@ -864,7 +864,7 @@ input#darkCheck:checked ~ label>svg#moon {
             </li>
             <li>
                 <span class="meta-data-title">Device</span>
-                <span class="meta-data-data">fv-az572-909</span>
+                <span class="meta-data-data">fv-az1236-420</span>
             </li>
             <li>
                 <span class="meta-data-title">OS</span>
@@ -947,13 +947,13 @@ input#darkCheck:checked ~ label>svg#moon {
                             
                                 <span class="tag">@regression</span>
                             
-                                <span class="tag">@edit-todo</span>
+                                <span class="tag">@clear-todo</span>
                             
                         
                     
                 </div>
 
-                <h2>Scenario: <small>Edit a todo's title</small></h2>
+                <h2>Scenario: <small>Clear all completed todos</small></h2>
 
                 <ul class="nav navbar-right panel_toolbox">
                     <li>
@@ -979,7 +979,7 @@ input#darkCheck:checked ~ label>svg#moon {
                     
                         <li>
                             <span style="font-size:1.2em"> Duration:</span>
-                            <span style=padding-right:5em>00:00:00.782</span>
+                            <span style=padding-right:5em>00:00:00.584</span>
                         </li>
                     
                 </ul>
@@ -1011,7 +1011,7 @@ input#darkCheck:checked ~ label>svg#moon {
 
                                     
                                         
-                                            <span class="duration">00:00:00.262</span>
+                                            <span class="duration">00:00:00.311</span>
                                         
                                     
 
@@ -1069,7 +1069,25 @@ input#darkCheck:checked ~ label>svg#moon {
                                                     
                                                         <td>A test todo</td>
                                                     
+                                                        <td>true</td>
+                                                    
+                                                </tr>
+                                            
+                                                <tr>
+                                                    
+                                                    
+                                                        <td>A second test todo</td>
+                                                    
                                                         <td>false</td>
+                                                    
+                                                </tr>
+                                            
+                                                <tr>
+                                                    
+                                                    
+                                                        <td>A third test todo</td>
+                                                    
+                                                        <td>true</td>
                                                     
                                                 </tr>
                                             
@@ -1104,7 +1122,7 @@ input#darkCheck:checked ~ label>svg#moon {
 
                                     
                                         
-                                            <span class="duration">00:00:00.111</span>
+                                            <span class="duration">00:00:00.113</span>
                                         
                                     
 
@@ -1162,77 +1180,13 @@ input#darkCheck:checked ~ label>svg#moon {
                                     <span class="keyword highlight">When </span>
 
                                     
-                                        I choose to edit "A test todo"
+                                        I clear all completed todos
                                         
                                     
 
                                     
                                         
-                                            <span class="duration">00:00:00.123</span>
-                                        
-                                    
-
-                                </div>
-
-                                
-                                    
-
-                                    
-
-                                    
-                                    
-                                    
-
-                                    
-
-                                    
-
-                                    
-                                
-                            </div>
-
-                        
-                            
-
-                            
-
-                            
-
-                            
-
-                            
-
-                            
-                        
-
-                        
-                            
-                        
-
-                    
-                
-                        
-                            <div class="scenario-step-container">
-
-                                
-                                    
-                                        <div class="label" title="Success">
-                                            <i class="fa fa-check-circle fa-2x passed-color" data-toggle="tooltip" data-placement="top" title="Step passed"></i>
-                                        </div>
-                                    
-                                
-
-                                <div class="text">
-                                    <span class="keyword highlight">And </span>
-
-                                    
-                                        I submit "A new title" for my edit todo title
-                                        
-                                    
-
-                                    
-                                        
-                                            <span class="duration">00:00:00.269</span>
+                                            <span class="duration">00:00:00.107</span>
                                         
                                     
 
@@ -1296,7 +1250,7 @@ input#darkCheck:checked ~ label>svg#moon {
 
                                     
                                         
-                                            <span class="duration">00:00:00.017</span>
+                                            <span class="duration">00:00:00.029</span>
                                         
                                     
 
@@ -1352,7 +1306,7 @@ input#darkCheck:checked ~ label>svg#moon {
                                                 <tr>
                                                     
                                                     
-                                                        <td>A new title</td>
+                                                        <td>A second test todo</td>
                                                     
                                                         <td>false</td>
                                                     
@@ -1363,6 +1317,70 @@ input#darkCheck:checked ~ label>svg#moon {
                                 </div>
 
                                 
+                            
+                        
+
+                    
+                
+                        
+                            <div class="scenario-step-container">
+
+                                
+                                    
+                                        <div class="label" title="Success">
+                                            <i class="fa fa-check-circle fa-2x passed-color" data-toggle="tooltip" data-placement="top" title="Step passed"></i>
+                                        </div>
+                                    
+                                
+
+                                <div class="text">
+                                    <span class="keyword highlight">And </span>
+
+                                    
+                                        I see that I have "1 item left"
+                                        
+                                    
+
+                                    
+                                        
+                                            <span class="duration">00:00:00.024</span>
+                                        
+                                    
+
+                                </div>
+
+                                
+                                    
+
+                                    
+
+                                    
+                                    
+                                    
+
+                                    
+
+                                    
+
+                                    
+                                
+                            </div>
+
+                        
+                            
+
+                            
+
+                            
+
+                            
+
+                            
+
+                            
+                        
+
+                        
                             
                         
 
