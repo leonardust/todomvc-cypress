@@ -70,11 +70,9 @@ To compile the TypeScript in this project:
 
 To be able to run the output JS files in the browser:
 
-
     $ node ./node_modules/browserify/bin/cmd ./js/app.js -o ./js/bundle.js
 
 To run the app, spin up an HTTP server (e.g. `python -m SimpleHTTPServer`) and visit http://localhost/.../myexample/.
 Alternatively you can run:
 
-   
     $ npm run start

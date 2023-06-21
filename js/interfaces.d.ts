@@ -1,39 +1,38 @@
 interface ITodo {
-  id: string,
-  title: string,
-  completed: boolean
+  id: string;
+  title: string;
+  completed: boolean;
 }
 
 interface ITodoItemProps {
-  key : string,
-  todo : ITodo;
-  editing? : boolean;
+  key: string;
+  todo: ITodo;
+  editing?: boolean;
   onSave: (val: any) => void;
   onDestroy: () => void;
-  onEdit: ()  => void;
-  onCancel: (event : any) => void;
+  onEdit: () => void;
+  onCancel: (event: any) => void;
   onToggle: () => void;
 }
 
 interface ITodoItemState {
-  editText : string
+  editText: string;
 }
 
 interface ITodoFooterProps {
-  completedCount : number;
-  onClearCompleted : any;
-  nowShowing : string;
-  count : number;
+  completedCount: number;
+  onClearCompleted: any;
+  nowShowing: string;
+  count: number;
 }
 
-
 interface ITodoModel {
-  key : any;
-  todos : Array<ITodo>;
-  onChanges : Array<any>;
+  key: any;
+  todos: Array<ITodo>;
+  onChanges: Array<any>;
   subscribe(onChange);
   inform();
-  addTodo(title : string);
+  addTodo(title: string);
   toggleAll(checked);
   toggle(todoToToggle);
   destroy(todo);
@@ -42,10 +41,10 @@ interface ITodoModel {
 }
 
 interface IAppProps {
-  model : ITodoModel;
+  model: ITodoModel;
 }
 
 interface IAppState {
-  editing? : string;
-  nowShowing? : string
+  editing?: string;
+  nowShowing?: string;
 }
