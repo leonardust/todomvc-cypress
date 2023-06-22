@@ -73,7 +73,7 @@ jobs:
       - name: Push results to jira
         if: always()
         run: |
-          curl -X POST https://c4j.cucumber.io/ci/rest/api/results \s
+          curl -X POST https://c4j.cucumber.io/ci/rest/api/results \
           -H "authorization: Bearer ${{ secrets.C4J_TOKEN }}" \
           -H 'content-type: multipart/form-data' \
           -F results_file=@./cypress/reports/cucumber-json/cucumber-report.json \
