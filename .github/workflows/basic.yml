@@ -73,7 +73,7 @@ jobs:
       - name: Push results to jira
         if: always()
         run: |
-          curl -X POST https://c4j.cucumber.io/ci/rest/api/results \
+          curl -X POST https://c4j.cucumber.io/ci/rest/api/results \s
           -H "authorization: Bearer ${{ secrets.C4J_TOKEN }}" \
           -H 'content-type: multipart/form-data' \
           -F results_file=@./cypress/reports/cucumber-json/cucumber-report.json \
@@ -82,4 +82,4 @@ jobs:
       - name: Write summary
         if: always()
         run: |
-          echo "[View run in Cucumber Report](https://leonardust.github.io/todomvc-cypress/)" >> $GITHUB_STEP_SUMMARY
+          echo "[View run in Cucumber Report](https://leonardust.github.io/todomvc-cypress-cucumber/)" >> $GITHUB_STEP_SUMMARY
