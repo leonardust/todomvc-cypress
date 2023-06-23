@@ -2,7 +2,7 @@
 @REQ_TCC-8
 Feature: Toggle a todo
 
-  @toggle-single-todo
+  @id:11 @toggle-single-todo
   Scenario: Complete a todo
 
     Given I have the following todos:
@@ -15,7 +15,7 @@ Feature: Toggle a todo
       | A test todo | true      |
     And   I see that I have "0 items left"
 
-  @toggle-single-todo
+  @id:12 @toggle-single-todo
   Scenario: Un-complete a todo
 
     Given I have the following todos:
@@ -28,7 +28,7 @@ Feature: Toggle a todo
       | A test todo | false     |
     And   I see that I have "1 item left"
 
-  @toggle-all-todos
+  @id:13 @toggle-all-todos
   Scenario: Complete all todos
 
     Given I have the following todos:
@@ -45,7 +45,7 @@ Feature: Toggle a todo
       | A third test todo  | true      |
     And   I see that I have "0 items left"
 
-  @toggle-all-todos
+  @id:14 @toggle-all-todos
   Scenario: Un-complete all todos
 
     Given I have the following todos:

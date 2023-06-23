@@ -2,6 +2,7 @@
 @REQ_TCC-7
 Feature: Remove a todo
 
+  @id:9
   Scenario: Remove my only todo
 
     Given I have the following todos:
@@ -11,6 +12,7 @@ Feature: Remove a todo
     When I remove "A test todo"
     Then I see that I have no existing todos
 
+  @id:10
   Scenario: Remove a todo
 
     Given I have the following todos:

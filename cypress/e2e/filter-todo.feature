@@ -10,6 +10,7 @@ Feature: Filters
       | Another test todo | true      |
     And   I navigate to the home page
 
+  @id:4
   Scenario: See only not yet completed todos
 
     When  I filter by "active"
@@ -18,6 +19,7 @@ Feature: Filters
       | A test todo | false     |
     And   I see that I have "1 item left"
 
+  @id:5
   Scenario: See only completed todos
 
     When  I filter by "completed"
@@ -26,6 +28,7 @@ Feature: Filters
       | Another test todo | true      |
     And   I see that I have "1 item left"
 
+  @id:6
   Scenario: See all todos
 
     And   I filter by "completed"

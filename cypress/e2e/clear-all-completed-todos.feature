@@ -2,6 +2,7 @@
 @REQ_TCC-5
 Feature: Clear all completed todos
 
+  @id:2
   Scenario: Clear all completed todos
 
     Given I have the following todos:
