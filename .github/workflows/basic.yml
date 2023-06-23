@@ -101,13 +101,18 @@ jobs:
 
       - name: generate auxiliary JSON to define some fields on the Test Execution to be created
         run: |
+          echo "Bieżący katalog: $(pwd)"
+          ls -a
           cat testexec_cloud_template.json  | sed s/PROJECT_KEY/${{ secrets.JIRACLOUD_PROJECT_KEY }}/g | sed s/TEST_ENVIRONMENT_NAME/${{ env.BROWSER }}/g | sed s/TESTPLAN_KEY/${{ secrets.XRAYCLOUD_TEST_PLAN_KEY }}/g > test_exec.json
+
       - name: debug testexec json
         run: |
           cat test_exec.json
+
       - name: "Import results to Xray (cloud) using multipart endpoint"
         run: |
           curl -X POST -H "Authorization: Bearer ${{ env.token }}"  -F info=@test_exec.json -F results=@"./cypress/reports/cucumber-json/cucumber-report.json" "${{ secrets.XRAYCLOUD_BASE_URL }}/api/v1/import/execution/cucumber/multipart"
+
       - name: "Import results to Xray using GH action"
         uses: mikepenz/xray-action@v2.3.0
         with:
