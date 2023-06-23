@@ -57,7 +57,7 @@ jobs:
       - name: Import cucumber scenarios to Xray
         run: |
           zip cypress/e2e/features.zip cypress/e2e
-          curl -H "Content-Type: multipart/form-data" -X POST -H "Authorization: Bearer ${{ env.token }}"  -F "file=@cypress/e2e/features.zip" "${{ secrets.XRAYCLOUD_BASE_URL }}/v2/import/feature?projectId=${{ secrets.JIRA_PROJECT_ID }}""
+          curl -H "Content-Type: multipart/form-data" -X POST -H "Authorization: Bearer ${{ env.token }}"  -F "file=@cypress/e2e/features.zip" "${{ secrets.XRAYCLOUD_BASE_URL }}/v2/import/feature?projectId=${{ secrets.JIRA_PROJECT_ID }}"
 
       - name: Cypress run
         uses: cypress-io/github-action@v5
