@@ -57,7 +57,7 @@ jobs:
       - name: Import cucumber scenarios to Xray
         run: |
           zip -r features.zip cypress/e2e/ -i \*.feature
-          curl -H "Content-Type: multipart/form-data" -X POST -H -u luk.komorowski.edu@gmail.com:|G{"h`|,FhwDP8Wv  -F "file=@features.zip" https://1000bpm.atlassian.net/rest/raven/1.0/import/feature?projectKey=TCC
+          curl -H "Content-Type: multipart/form-data" -X POST -H -u luk.komorowski.edu@gmail.com:|G{"h`|,FhwDP8Wv  -F "file=@features.zip" "https://1000bpm.atlassian.net/rest/raven/1.0/import/feature?projectKey=TCC"
 
       - name: Cypress run
         uses: cypress-io/github-action@v5
