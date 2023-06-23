@@ -1,4 +1,5 @@
 @regression @edit-todo
+@REQ_TCC-3
 Feature: Edit a todo's title
 
   Scenario: Edit a todo's title

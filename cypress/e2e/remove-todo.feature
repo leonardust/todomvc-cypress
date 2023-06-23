@@ -1,4 +1,5 @@
 @regression @remove-todo
+@REQ_TCC-7
 Feature: Remove a todo
 
   Scenario: Remove my only todo

@@ -1,4 +1,5 @@
 @regression @toggle-todo
+@REQ_TCC-8
 Feature: Toggle a todo
 
   @toggle-single-todo

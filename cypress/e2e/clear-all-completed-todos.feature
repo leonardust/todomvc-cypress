@@ -1,4 +1,5 @@
 @regression @clear-todo
+@REQ_TCC-5
 Feature: Clear all completed todos
 
   Scenario: Clear all completed todos

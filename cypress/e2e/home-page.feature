@@ -1,4 +1,5 @@
 @regression @home-page
+@REQ_TCC-8
 Feature: Home page
 
   Scenario: See the home page
