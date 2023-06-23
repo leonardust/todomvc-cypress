@@ -36,12 +36,16 @@ jobs:
         with:
           node-version: 16.x
 
+      - name: Checkout
+        uses: actions/checkout@v3
+
       - name: generate auxiliary JSON for authenticating with Xray cloud and obtain token
         run: |
           echo "Bieżący katalog: $(pwd)"
           ls -a
           cat cloud_auth.json.sample  | sed s/CLIENT_ID/${{ secrets.XRAYCLOUD_CLIENT_ID }}/g | sed s/CLIENT_SECRET/${{ secrets.XRAYCLOUD_CLIENT_SECRET }}/g > cloud_auth.json
           echo token=$(curl -H "Content-Type: application/json" -X POST --data @"cloud_auth.json" ${{ secrets.XRAYCLOUD_BASE_URL }}/api/v1/authenticate| tr -d '"') >> $GITHUB_ENV
+
       - name: Export scenarios from Xray and generate .feature file(s)
         run: |
           FEATURES_FILE=features.zip
@@ -49,9 +53,6 @@ jobs:
           curl -H "Content-Type: application/json" -X GET -H "Authorization: Bearer ${{ env.token }}" "${{ secrets.XRAYCLOUD_BASE_URL }}/api/v1/export/cucumber?keys=${{ secrets.XRAYCLOUD_ISSUE_KEYS_TO_EXPORT_FROM }}" -o $FEATURES_FILE
           rm -f features/*.feature
           unzip -o $FEATURES_FILE  -d e2e
-
-      - name: Checkout
-        uses: actions/checkout@v3
 
       - name: Cypress run
         uses: cypress-io/github-action@v5
