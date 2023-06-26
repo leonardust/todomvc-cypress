@@ -54,10 +54,10 @@ jobs:
       #     rm -f features/*.feature
       #     unzip -o $FEATURES_FILE  -d e2e
 
-        - name: Import cucumber scenarios to Xray
-          run: |
-            zip -r features.zip cypress/e2e/ -i \*.feature
-            curl -H "Content-Type: multipart/form-data" -X POST -H -u ${{ secrets.JIRA_USER }}:${{ secrets.JIRA_PASSWORD }}  -F "file=@features.zip" https://1000bpm.atlassian.net/rest/raven/1.0/import/feature?projectKey=TCC
+      - name: Import cucumber scenarios to Xray
+        run: |
+          zip -r features.zip cypress/e2e/ -i \*.feature
+          curl -H "Content-Type: multipart/form-data" -X POST -H -u ${{ secrets.JIRA_USER }}:${{ secrets.JIRA_PASSWORD }}  -F "file=@features.zip" https://1000bpm.atlassian.net/rest/raven/1.0/import/feature?projectKey=TCC
 
       - name: Cypress run
         uses: cypress-io/github-action@v5
