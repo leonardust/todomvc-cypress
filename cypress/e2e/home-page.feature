@@ -2,7 +2,7 @@
 @REQ_TCC-8
 Feature: Home page
 
-  @TCC-10
+  @TCC-20
   Scenario: See the home page
 
     When I navigate to the home page
