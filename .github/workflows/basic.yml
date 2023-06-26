@@ -100,14 +100,17 @@ jobs:
       #     -F language=js
 
       - name: Generate auxiliary JSON to define some fields on the Test Execution to be created
+        if: always()
         run: |
           cat testexec_cloud_template.json  | sed s/PROJECT_KEY/${{ secrets.JIRACLOUD_PROJECT_KEY }}/g | sed s/TEST_ENVIRONMENT_NAME/${{ env.BROWSER }}/g | sed s/TESTPLAN_KEY/${{ secrets.XRAYCLOUD_TEST_PLAN_KEY }}/g > test_exec.json
 
       - name: Debug test_exec.json
+        if: always()
         run: |
           cat test_exec.json
 
       - name: Import Test Execution to Xray
+        if: always()
         run: |
           curl -X POST -H "Authorization: Bearer ${{ env.token }}"  -F info=@test_exec.json -F results=@"./cypress/reports/cucumber-json/cucumber-report.json" "${{ secrets.XRAYCLOUD_BASE_URL }}/api/v1/import/execution/cucumber/multipart"
 
