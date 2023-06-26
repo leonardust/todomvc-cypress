@@ -22,7 +22,7 @@ Feature: Toggle a todo
       | title       | completed |
       | A test todo | true      |
     When  I navigate to the home page
-    And   I complete "A test todo"
+    And   I un-complete "A test todo"
     Then  I see the following todos:
       | title       | completed |
       | A test todo | false     |
