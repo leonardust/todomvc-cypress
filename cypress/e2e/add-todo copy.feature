@@ -3,7 +3,7 @@
 Feature: Add a todo
 
   @id:1
-  Scenario Outline: Add my first todo <title>
+  Scenario Outline: Test
 
     Given I have no todos
     And   I navigate to the home page
