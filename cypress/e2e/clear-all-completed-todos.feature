@@ -2,7 +2,7 @@
 @REQ_TCC-5
 Feature: Clear all completed todos
 
-  @id:2
+  @TCC-12
   Scenario: Clear all completed todos
 
     Given I have the following todos:
@@ -10,9 +10,9 @@ Feature: Clear all completed todos
       | A test todo        | true      |
       | A second test todo | false     |
       | A third test todo  | true      |
-    And I navigate to the home page
-    When I clear all completed todos
-    Then I see the following todos:
+    And   I navigate to the home page
+    When  I clear all completed todos
+    Then  I see the following todos:
       | title              | completed |
       | A second test todo | false     |
-    And I see that I have "1 item left"
+    And   I see that I have "1 item left"

@@ -54,10 +54,10 @@ jobs:
       #     rm -f features/*.feature
       #     unzip -o $FEATURES_FILE  -d e2e
 
-      - name: Import cucumber scenarios to Xray
-        run: |
-          zip -r features.zip cypress/e2e/ -i \*.feature
-          curl -H "Content-Type: multipart/form-data" -X POST -H -u luk.komorowski.edu@gmail.com:\|G{\"h\`|,FhwDP8Wv  -F "file=@features.zip" "https://1000bpm.atlassian.net/rest/raven/1.0/import/feature?projectKey=TCC"
+      # - name: Import cucumber scenarios to Xray
+      #   run: |
+      #     zip -r features.zip cypress/e2e/ -i \*.feature
+      #     curl -H "Content-Type: multipart/form-data" -X POST -H -u luk.komorowski.edu@gmail.com:\|G{\"h\`|,FhwDP8Wv  -F "file=@features.zip" "https://1000bpm.atlassian.net/rest/raven/1.0/import/feature?projectKey=TCC"
 
       - name: Cypress run
         uses: cypress-io/github-action@v5
@@ -111,15 +111,15 @@ jobs:
         run: |
           curl -X POST -H "Authorization: Bearer ${{ env.token }}"  -F info=@test_exec.json -F results=@"./cypress/reports/cucumber-json/cucumber-report.json" "${{ secrets.XRAYCLOUD_BASE_URL }}/api/v1/import/execution/cucumber/multipart"
 
-      - name: "Import results to Xray using GH action"
-        uses: mikepenz/xray-action@v2.3.0
-        with:
-          username: ${{ secrets.XRAYCLOUD_CLIENT_ID }}
-          password: ${{ secrets.XRAYCLOUD_CLIENT_SECRET }}
-          xrayCloud: "true"
-          testFormat: "cucumber"
-          testPaths: "./cypress/reports/cucumber-json/cucumber-report.json"
-          testExecutionJson: "test_exec.json"
+      # - name: "Import results to Xray using GH action"
+      #   uses: mikepenz/xray-action@v2.3.0
+      #   with:
+      #     username: ${{ secrets.XRAYCLOUD_CLIENT_ID }}
+      #     password: ${{ secrets.XRAYCLOUD_CLIENT_SECRET }}
+      #     xrayCloud: "true"
+      #     testFormat: "cucumber"
+      #     testPaths: "./cypress/reports/cucumber-json/cucumber-report.json"
+      #     testExecutionJson: "test_exec.json"
 
       - name: Write summary
         if: always()

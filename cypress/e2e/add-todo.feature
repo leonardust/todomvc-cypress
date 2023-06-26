@@ -2,7 +2,7 @@
 @REQ_TCC-6
 Feature: Add a todo
 
-  @id:1
+  @TCC-11
   Scenario Outline: Add my first todo <title>
 
     Given I have no todos
