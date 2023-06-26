@@ -46,6 +46,19 @@ jobs:
           cat cloud_auth.json.sample  | sed s/CLIENT_ID/${{ secrets.XRAYCLOUD_CLIENT_ID }}/g | sed s/CLIENT_SECRET/${{ secrets.XRAYCLOUD_CLIENT_SECRET }}/g > cloud_auth.json
           echo token=$(curl -H "Content-Type: application/json" -X POST --data @"cloud_auth.json" ${{ secrets.XRAYCLOUD_BASE_URL }}/api/v1/authenticate| tr -d '"') >> $GITHUB_ENV
 
+      # - name: Export scenarios from Xray and generate .feature file(s)
+      #   run: |
+      #     FEATURES_FILE=features.zip
+      #     rm -f $FEATURES_FILE
+      #     curl -H "Content-Type: application/json" -X GET -H "Authorization: Bearer ${{ env.token }}" "${{ secrets.XRAYCLOUD_BASE_URL }}/api/v1/export/cucumber?keys=${{ secrets.XRAYCLOUD_ISSUE_KEYS_TO_EXPORT_FROM }}" -o $FEATURES_FILE
+      #     rm -f features/*.feature
+      #     unzip -o $FEATURES_FILE  -d e2e
+
+      # - name: Import cucumber scenarios to Xray
+      #   run: |
+      #     zip -r features.zip cypress/e2e/ -i \*.feature
+      #     curl -H "Content-Type: multipart/form-data" -X POST -H -u luk.komorowski.edu@gmail.com:\|G{\"h\`|,FhwDP8Wv  -F "file=@features.zip" "https://1000bpm.atlassian.net/rest/raven/1.0/import/feature?projectKey=TCC"
+
       - name: Cypress run
         uses: cypress-io/github-action@v5
         with:
@@ -77,18 +90,36 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./cypress/reports/cucumber-report
 
-      # generate auxiliary JSON to define some fields on the Test Execution to be created
-      - name: create Test Execution
+      - name: Push results to jira
+        if: always()
+        run: |
+          curl -X POST https://c4j.cucumber.io/ci/rest/api/results \
+          -H "authorization: Bearer ${{ secrets.C4J_TOKEN }}" \
+          -H 'content-type: multipart/form-data' \
+          -F results_file=@./cypress/reports/cucumber-json/cucumber-report.json \
+          -F language=js
+
+      - name: generate auxiliary JSON to define some fields on the Test Execution to be created
         run: |
           cat testexec_cloud_template.json  | sed s/PROJECT_KEY/${{ secrets.JIRACLOUD_PROJECT_KEY }}/g | sed s/TEST_ENVIRONMENT_NAME/${{ env.BROWSER }}/g | sed s/TESTPLAN_KEY/${{ secrets.XRAYCLOUD_TEST_PLAN_KEY }}/g > test_exec.json
 
-      - name: debug Test Execution
+      - name: debug testexec json
         run: |
           cat test_exec.json
 
-      - name: Import Test Execution to Xray
+      - name: "Import results to Xray (cloud) using multipart endpoint"
         run: |
           curl -X POST -H "Authorization: Bearer ${{ env.token }}"  -F info=@test_exec.json -F results=@"./cypress/reports/cucumber-json/cucumber-report.json" "${{ secrets.XRAYCLOUD_BASE_URL }}/api/v1/import/execution/cucumber/multipart"
+
+      # - name: "Import results to Xray using GH action"
+      #   uses: mikepenz/xray-action@v2.3.0
+      #   with:
+      #     username: ${{ secrets.XRAYCLOUD_CLIENT_ID }}
+      #     password: ${{ secrets.XRAYCLOUD_CLIENT_SECRET }}
+      #     xrayCloud: "true"
+      #     testFormat: "cucumber"
+      #     testPaths: "./cypress/reports/cucumber-json/cucumber-report.json"
+      #     testExecutionJson: "test_exec.json"
 
       - name: Write summary
         if: always()

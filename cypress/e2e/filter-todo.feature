@@ -2,15 +2,20 @@
 @REQ_TCC-4
 Feature: Filters
 
-  Background:
+  @TCC-17
+  Background: I have the following todos on the home page
 
     Given I have the following todos:
       | title             | completed |
       | A test todo       | false     |
       | Another test todo | true      |
-    And   I navigate to the home page
+    When  I navigate to the home page
+    Then I see the following todos:
+      | title             | completed |
+      | A test todo       | false     |
+      | Another test todo | true      |
 
-  @id:4
+  @TCC-16
   Scenario: See only not yet completed todos
 
     When  I filter by "active"
@@ -19,7 +24,7 @@ Feature: Filters
       | A test todo | false     |
     And   I see that I have "1 item left"
 
-  @id:5
+  @TCC-18
   Scenario: See only completed todos
 
     When  I filter by "completed"
@@ -28,11 +33,11 @@ Feature: Filters
       | Another test todo | true      |
     And   I see that I have "1 item left"
 
-  @id:6
+  @TCC-19
   Scenario: See all todos
 
-    And   I filter by "completed"
-    When  I filter by "all"
+    When  I filter by "completed"
+    And   I filter by "all"
     Then  I see the following todos:
       | title             | completed |
       | A test todo       | false     |

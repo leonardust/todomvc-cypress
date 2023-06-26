@@ -2,7 +2,7 @@
 @REQ_TCC-3
 Feature: Edit a todo's title
 
-  @id:3
+  @TCC-15
   Scenario: Edit a todo's title
 
     Given I have the following todos:

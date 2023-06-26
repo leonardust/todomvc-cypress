@@ -2,13 +2,13 @@
 @REQ_TCC-8
 Feature: Home page
 
-  @id:7
+  @TCC-10
   Scenario: See the home page
 
     When I navigate to the home page
     Then I see the home page
 
-  @id:8
+  @TCC-21
   Scenario: See my existing todos
 
     Given I have the following todos:
