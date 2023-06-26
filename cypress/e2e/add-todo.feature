@@ -1,6 +1,8 @@
 @regression @add-todo
+@REQ_TCC-6
 Feature: Add a todo
 
+  @TCC-11
   Scenario Outline: Add my first todo <title>
 
     Given I have no todos

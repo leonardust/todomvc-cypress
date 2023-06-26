@@ -1,6 +1,8 @@
 @regression @edit-todo
+@REQ_TCC-3
 Feature: Edit a todo's title
 
+  @TCC-15
   Scenario: Edit a todo's title
 
     Given I have the following todos:
