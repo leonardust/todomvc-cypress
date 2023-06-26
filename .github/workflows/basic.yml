@@ -102,7 +102,12 @@ jobs:
       - name: Generate auxiliary JSON to define some fields on the Test Execution to be created
         if: always()
         run: |
-          cat testexec_cloud_template.json  | sed s/PROJECT_KEY/${{ secrets.JIRACLOUD_PROJECT_KEY }}/g | sed s/TEST_ENVIRONMENT_NAME/${{ env.BROWSER }}/g | sed s/TESTPLAN_KEY/${{ secrets.XRAYCLOUD_TEST_PLAN_KEY }}/g > test_exec.json
+          cat testexec_cloud_template.json  | \
+          sed s/PROJECT_KEY/${{ secrets.JIRACLOUD_PROJECT_KEY }}/g | \
+          sed s/TESTPLAN_KEY/${{ secrets.XRAYCLOUD_TEST_PLAN_KEY }}/g | \
+          sed s/TEST_ENVIRONMENT_NAME/${{ env.BROWSER }}/g | \
+          sed "s/BEGIN_DATE/$(date -u +'%Y-%m-%dT%H:%M:%S.%3NZ')/g" | \
+          sed "s/END_DATE/$(date -u +'%Y-%m-%dT%H:%M:%S.%3NZ')/g" > test_exec.json
 
       - name: Debug test_exec.json
         if: always()
