@@ -107,19 +107,19 @@ jobs:
         run: |
           cat test_exec.json
 
-      - name: "Import results to Xray (cloud) using multipart endpoint"
-        run: |
-          curl -X POST -H "Authorization: Bearer ${{ env.token }}"  -F info=@test_exec.json -F results=@"./cypress/reports/cucumber-json/cucumber-report.json" "${{ secrets.XRAYCLOUD_BASE_URL }}/api/v1/import/execution/cucumber/multipart"
+      # - name: "Import results to Xray (cloud) using multipart endpoint"
+      #   run: |
+      #     curl -X POST -H "Authorization: Bearer ${{ env.token }}"  -F info=@test_exec.json -F results=@"./cypress/reports/cucumber-json/cucumber-report.json" "${{ secrets.XRAYCLOUD_BASE_URL }}/api/v1/import/execution/cucumber/multipart"
 
-      # - name: "Import results to Xray using GH action"
-      #   uses: mikepenz/xray-action@v2.3.0
-      #   with:
-      #     username: ${{ secrets.XRAYCLOUD_CLIENT_ID }}
-      #     password: ${{ secrets.XRAYCLOUD_CLIENT_SECRET }}
-      #     xrayCloud: "true"
-      #     testFormat: "cucumber"
-      #     testPaths: "./cypress/reports/cucumber-json/cucumber-report.json"
-      #     testExecutionJson: "test_exec.json"
+      - name: "Import results to Xray using GH action"
+        uses: mikepenz/xray-action@v2.3.0
+        with:
+          username: ${{ secrets.XRAYCLOUD_CLIENT_ID }}
+          password: ${{ secrets.XRAYCLOUD_CLIENT_SECRET }}
+          xrayCloud: "true"
+          testFormat: "cucumber"
+          testPaths: "./cypress/reports/cucumber-json/cucumber-report.json"
+          testExecutionJson: "test_exec.json"
 
       - name: Write summary
         if: always()
