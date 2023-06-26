@@ -46,20 +46,20 @@ jobs:
           cat cloud_auth.json.sample  | sed s/CLIENT_ID/${{ secrets.XRAYCLOUD_CLIENT_ID }}/g | sed s/CLIENT_SECRET/${{ secrets.XRAYCLOUD_CLIENT_SECRET }}/g > cloud_auth.json
           echo token=$(curl -H "Content-Type: application/json" -X POST --data @"cloud_auth.json" ${{ secrets.XRAYCLOUD_BASE_URL }}/api/v1/authenticate| tr -d '"') >> $GITHUB_ENV
 
-      - name: Export scenarios from Xray and generate .feature file(s)
-        run: |
-          FEATURES_FILE=features.zip
-          rm -f $FEATURES_FILE
-          curl -H "Content-Type: application/json" -X GET -H "Authorization: Bearer ${{ env.token }}" "${{ secrets.XRAYCLOUD_BASE_URL }}/api/v1/export/cucumber?keys=${{ secrets.XRAYCLOUD_ISSUE_KEYS_TO_EXPORT_FROM }}" -o $FEATURES_FILE
-          rm -f features/*.feature
-          unzip -o $FEATURES_FILE  -d e2e
+      # - name: Export scenarios from Xray and generate .feature file(s)
+      #   run: |
+      #     FEATURES_FILE=features.zip
+      #     rm -f $FEATURES_FILE
+      #     curl -H "Content-Type: application/json" -X GET -H "Authorization: Bearer ${{ env.token }}" "${{ secrets.XRAYCLOUD_BASE_URL }}/api/v1/export/cucumber?keys=${{ secrets.XRAYCLOUD_ISSUE_KEYS_TO_EXPORT_FROM }}" -o $FEATURES_FILE
+      #     rm -f features/*.feature
+      #     unzip -o $FEATURES_FILE  -d e2e
 
         - name: Import cucumber scenarios to Xray
           run: |
             zip -r features.zip cypress/e2e/ -i \*.feature
             curl -H "Content-Type: multipart/form-data" -X POST -H -u ${{ secrets.JIRA_USER }}:${{ secrets.JIRA_PASSWORD }}  -F "file=@features.zip" https://1000bpm.atlassian.net/rest/raven/1.0/import/feature?projectKey=TCC
 
-        # - name: Cypress run
+      - name: Cypress run
         uses: cypress-io/github-action@v5
         with:
           browser: ${{env.BROWSER || 'chrome'}}
