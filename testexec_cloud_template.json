@@ -10,8 +10,9 @@
   },
   "xrayFields": {
     "testPlanKey": "TESTPLAN_KEY",
-    "environments": ["TEST_ENVIRONMENT_NAME"],
-    "beginDate": "BEGIN_DATE",
-    "endDate": "END_DATE"
+    "testEnvironments": ["TEST_ENVIRONMENT_NAME"],
+    "startDate": "START_DATE",
+    "finishDate": "FINISH_DATE",
+    "user": "USER"
   }
 }

@@ -106,8 +106,9 @@ jobs:
           sed s/PROJECT_KEY/${{ secrets.JIRACLOUD_PROJECT_KEY }}/g | \
           sed s/TESTPLAN_KEY/${{ secrets.XRAYCLOUD_TEST_PLAN_KEY }}/g | \
           sed s/TEST_ENVIRONMENT_NAME/${{ env.BROWSER }}/g | \
-          sed "s/BEGIN_DATE/$(date -u +'%Y-%m-%dT%H:%M:%S.%3NZ')/g" | \
-          sed "s/END_DATE/$(date -u +'%Y-%m-%dT%H:%M:%S.%3NZ')/g" > test_exec.json
+          sed s/USER/${{ github.actor }}/g | \
+          sed "s/START_DATE/$(date -u +'%Y-%m-%dT%H:%M:%S.%3NZ')/g" | \
+          sed "s/FINISH_DATE/$(date -u +'%Y-%m-%dT%H:%M:%S.%3NZ')/g" > test_exec.json
 
       - name: Debug test_exec.json
         if: always()
