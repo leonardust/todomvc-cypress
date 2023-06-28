@@ -25,6 +25,10 @@ env:
 jobs:
   cypress-run:
     runs-on: ubuntu-22.04
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chrome, firefox, edge]
     permissions:
       contents: write
     steps:
@@ -57,10 +61,10 @@ jobs:
       #     zip -r features.zip cypress/e2e/ -i \*.feature
       #     curl -H "Content-Type: multipart/form-data" -X POST -H -u ${{ secrets.JIRA_USER }}:${{ secrets.JIRA_PASSWORD }}  -F "file=@features.zip" ${{ secrets.JIRA_BASE_URL }}/rest/raven/1.0/import/feature?projectKey=TCC
 
-      - name: Cypress run
+      - name: Cypress run on ${{ matrix.browser }}
         uses: cypress-io/github-action@v5
         with:
-          browser: ${{env.BROWSER || 'chrome'}}
+          browser: ${{env.BROWSER || matrix.browser}}
           install-command: npm install
           build: npm run build
           start: npm start
