@@ -27,6 +27,7 @@ jobs:
           install-command: npm install
           build: npm run build
           start: npm start
+
 ```
 
 `install-command: npm install` is used to install devDependencies
@@ -46,6 +47,7 @@ Add steps to **generate report** and **upload artifacts** after **Cypress run** 
         with:
           name: cypress-cucumber-report
           path: cypress/reports/cucumber-report/
+
 ```
 
 Piece of code below preserves that next steps are always execute even **Cypress run** step fails
@@ -53,6 +55,7 @@ Piece of code below preserves that next steps are always execute even **Cypress 
 ```yaml
     if: always()
     continue-on-error: true
+
 ```
 
 ### Workflow job parametrization
@@ -87,6 +90,7 @@ workflow_dispatch:
 
 push:
   branches: [main]
+
 ```
 
 #### env
@@ -96,6 +100,7 @@ add **env:** section to set browser env variable based on the user selection or 
 ```yaml
 env:
 BROWSER: ${{ github.event.inputs.browser || 'electron' }}
+
 ```
 
 add browser option in **Cypress run** step to run tests in selected browser
@@ -108,6 +113,7 @@ add browser option in **Cypress run** step to run tests in selected browser
         install-command: npm install
         build: npm run build
         start: npm start
+
 ```
 
 #### cron
@@ -117,6 +123,7 @@ to schedule jobs add to **on:** section
 ```yaml
   schedule:
   - cron: "0 0 * * *"
+
 ```
 
 ### Deploy report to gh-pages
@@ -132,6 +139,7 @@ add step __deploy report to gh-pages__ [How GITHUB_TOKEN works](https://dev.to/g
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./cypress/reports/cucumber-report
+
 ```
 
 add write permissions
@@ -142,6 +150,7 @@ jobs:
     runs-on: ubuntu-22.04
     permissions:
       contents: write
+
 ```
 
 set gh-pages as branch from which Github Page will be deployed
@@ -152,16 +161,17 @@ For now our workflow file will trigger pages-build-deplyment job which deploy re
 
 ![pages-build-deplyoment](../pictures/pages_build_deplyoment.png)
 
-### WorkflowJob Summary
+### Workflow Summary
 
 We can configure workflow file to display in job summary custom information like: browser or link to the report page
 
 ```yaml
-    - name: Write summary
-      if: always()
+
+  - name: Write summary
+    if: always()
       run: |
-      echo "- Browser: $BROWSER" >> $GITHUB_STEP_SUMMARY
-      echo "- Cucumber report: https://leonardust.github.io/todomvc-cypress/" >> $GITHUB_STEP_SUMMARY
+      echo "[View run in Cucumber Report](https://leonardust.github.io/todomvc-cypress-cucumber/)" >> $GITHUB_STEP_SUMMARY
+
 ```
 
 ![Job Summary](../pictures/cypress_run_summary.png)
@@ -181,6 +191,7 @@ add step to workflow file
           -H 'content-type: multipart/form-data' \
           -F results_file=@./cypress/reports/cucumber-json/cucumber-report.json \
           -F language=js
+
 ```
 
 create repository secret C4J_TOKEN with value provided by Cucumber for Jira plugin in your Jira instance
@@ -268,4 +279,136 @@ jobs:
         run: |
           echo "- Browser: $BROWSER" >> $GITHUB_STEP_SUMMARY
           echo "- Cucumber report: https://leonardust.github.io/todomvc-cypress/" >> $GITHUB_STEP_SUMMARY
+
+```
+
+## XRAY configuration
+
+#### Install and setup xray app
+
+- https://docs.getxray.app/display/XRAYCLOUD/Installation
+- https://docs.getxray.app/display/XRAYCLOUD/Quick+Setup
+
+#### Repository secrets
+
+Create API key for Jira user -> https://docs.getxray.app/display/XRAYCLOUD/Global+Settings%3A+API+Keys
+
+- XRAY_CLIENT_ID = API key Client id
+- XRAYCLOUD_CLIENT_SECRET = API key Client secret
+- XRAYCLOUD_BASE_URL -> "https://xray.cloud.getxray.app/"
+- JIRACLOUD_PROJECT_KEY -> Available in Project settings and Details section
+- XRAYCLOUD_TEST_PLAN_KEY = key of the test plan issue in Jira
+
+#### Workflow steps
+
+##### Generate auxiliary JSON for authenticating with Xray cloud and obtain token
+       
+
+```yaml
+- name: Generate auxiliary JSON for authenticating with Xray cloud and obtain token
+  run: |
+    cat cloud_auth.json.sample  \ 
+    | sed s/CLIENT_ID/${{ secrets.XRAYCLOUD_CLIENT_ID }}/g \
+    | sed s/CLIENT_SECRET/${{ secrets.XRAYCLOUD_CLIENT_SECRET }}/g > cloud_auth.json
+    echo token=$(curl -H "Content-Type: application/json" -X POST --data @"cloud_auth.json" ${{ secrets.XRAYCLOUD_BASE_URL }}/api/v1/authenticate| tr -d '"') >> $GITHUB_ENV
+```
+
+##### Generate auxiliary JSON to define some fields on the Test Execution to be created
+
+```yaml
+- name: Generate auxiliary JSON to define some fields on the Test Execution to be created
+  if: always()
+  run: |
+    cat testexec_cloud_template.json | \
+    sed s/PROJECT_KEY/${{ secrets.JIRACLOUD_PROJECT_KEY }}/g | \ 
+    sed s/TEST_ENVIRONMENT_NAME/${{ env.BROWSER }}/g | \ 
+    sed s/TESTPLAN_KEY/${{ secrets.XRAYCLOUD_TEST_PLAN_KEY }}/g > test_exec.json
+```
+
+##### Debug test_exec.json (optional)
+
+```yaml
+- name: Debug test_exec.json
+  if: always()
+    run: |
+      cat test_exec.json
+```
+
+##### Import Test Execution to Xray
+
+```yaml
+- name: Import Test Execution to Xray
+  if: always()
+  run: |
+    curl -X POST -H "Authorization: Bearer ${{ env.token }}" \
+    -F info=@test_exec.json \
+    -F results=@"./cypress/reports/cucumber-json/cucumber-report.json" \
+    "${{ secrets.XRAYCLOUD_BASE_URL }}/api/v1/import/execution/cucumber/multipart"
+```
+
+Instead of import results above GH action can be used
+
+```yaml
+- name: "Import results to Xray using GH action"
+  uses: mikepenz/xray-action@v2.3.0
+  with:
+    username: ${{ secrets.XRAYCLOUD_CLIENT_ID }}
+    password: ${{ secrets.XRAYCLOUD_CLIENT_SECRET }}
+    xrayCloud: "true"
+    testFormat: "cucumber"
+    testPaths: "./cypress/reports/cucumber-json/cucumber-report.json"
+    testExecutionJson: "test_exec.json"
+```
+
+#### Template files
+
+Template files are used for authentication and test result creation
+
+- **cloud_auth.json.sample** is used as template to create **cloud_auth.json** which is used to authenticating with xray and obtain token
+- **testexec_cloud_template.json** is used as a template to create **test_exec.json** file. It contains information about fields in created Test Execution in Jira 
+
+#### Feature and scenario tags
+
+Each feature should be linked to the requirement( story or acceptance criteria ) in Jira using tag with unique identifier 
+
+```java
+@REQ_TCC-6
+Feature: Add a todo
+```
+
+Each sceanrio should be linked to the test in Jira using tag with unique identifier
+
+```java
+@TCC-12
+  Scenario: Clear all completed todos
+``` 
+
+Each Background should be linked to the Precondition in Jira but key should be commented to avoid syntax error
+
+```java
+#@TCC-17
+  Background: I have the following todos on the home page
+```  
+
+#### TODO
+
+Steps below not working and were commented until fix will be delivered
+
+```yaml
+- name: Export scenarios from Xray and generate .feature file(s)
+  run: |
+    FEATURES_FILE=features.zip
+    rm -f $FEATURES_FILE
+    curl -H "Content-Type: application/json" -X GET -H "Authorization: Bearer ${{ env.token }}" \
+    "${{ secrets.XRAYCLOUD_BASE_URL }}/api/v1/export/cucumber?keys=${{ secrets.XRAYCLOUD_ISSUE_KEYS_TO_EXPORT_FROM }}" -o $FEATURES_FILE
+    rm -f features/*.feature
+    unzip -o $FEATURES_FILE  -d e2e
+
+- name: Import cucumber scenarios to Xray
+  run: |
+    zip -r features.zip cypress/e2e/ -i \*.feature
+    curl -H "Content-Type: multipart/form-data" -X POST -H -u ${{ secrets.JIRA_USER }}:${{ secrets.JIRA_PASSWORD }}  \
+    -F "file=@features.zip" ${{ secrets.JIRA_BASE_URL }}/rest/raven/1.0/import/feature?projectKey=TCC
+
+
 ```
