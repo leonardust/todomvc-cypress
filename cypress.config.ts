@@ -2,6 +2,7 @@ import { defineConfig } from "cypress";
 import createBundler from "@bahmutov/cypress-esbuild-preprocessor";
 import { addCucumberPreprocessorPlugin } from "@badeball/cypress-cucumber-preprocessor";
 import createEsbuildPlugin from "@badeball/cypress-cucumber-preprocessor/esbuild";
+import cypressSplit from "cypress-split";
 
 export default defineConfig({
   projectId: "r9e6vn",
@@ -22,7 +23,7 @@ export default defineConfig({
           plugins: [createEsbuildPlugin(config)],
         })
       );
-
+      cypressSplit(on, config);
       // Make sure to return the config object as it might have been modified by the plugin.
       return config;
     },
