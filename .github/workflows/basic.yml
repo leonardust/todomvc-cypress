@@ -64,7 +64,7 @@ jobs:
       - name: Cypress run on ${{ matrix.browser }}
         uses: cypress-io/github-action@v5
         with:
-          browser: ${{env.BROWSER || matrix.browser}}
+          browser: ${{ matrix.browser || env.BROWSER || }}
           install-command: npm install
           build: npm run build
           start: npm start
