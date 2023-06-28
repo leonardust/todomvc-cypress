@@ -302,14 +302,11 @@ Create API key for Jira user -> https://docs.getxray.app/display/XRAYCLOUD/Globa
 #### Workflow steps
 
 ##### Generate auxiliary JSON for authenticating with Xray cloud and obtain token
-       
 
 ```yaml
 - name: Generate auxiliary JSON for authenticating with Xray cloud and obtain token
   run: |
-    cat cloud_auth.json.sample  \ 
-    | sed s/CLIENT_ID/${{ secrets.XRAYCLOUD_CLIENT_ID }}/g \
-    | sed s/CLIENT_SECRET/${{ secrets.XRAYCLOUD_CLIENT_SECRET }}/g > cloud_auth.json
+    cat cloud_auth.json.sample | sed s/CLIENT_ID/${{ secrets.XRAYCLOUD_CLIENT_ID }}/g | sed s/CLIENT_SECRET/${{ secrets.XRAYCLOUD_CLIENT_SECRET }}/g > cloud_auth.json
     echo token=$(curl -H "Content-Type: application/json" -X POST --data @"cloud_auth.json" ${{ secrets.XRAYCLOUD_BASE_URL }}/api/v1/authenticate| tr -d '"') >> $GITHUB_ENV
 ```
 
@@ -364,16 +361,17 @@ Instead of import results above GH action can be used
 
 Template files are used for authentication and test result creation
 
-- **cloud_auth.json.sample** is used as template to create **cloud_auth.json** which is used to authenticating with xray and obtain token
-- **testexec_cloud_template.json** is used as a template to create **test_exec.json** file. It contains information about fields in created Test Execution in Jira 
+- __cloud_auth.json.sample__ is used as template to create __cloud_auth.json__ which is used to authenticating with xray and obtain token
+- __testexec_cloud_template.json__ is used as a template to create __test_exec.json__ file. It contains information about fields in created Test Execution in Jira
 
 #### Feature and scenario tags
 
-Each feature should be linked to the requirement( story or acceptance criteria ) in Jira using tag with unique identifier 
+Each feature should be linked to the requirement( story or acceptance criteria ) in Jira using tag with unique identifier
 
 ```java
 @REQ_TCC-6
 Feature: Add a todo
+
 ```
 
 Each sceanrio should be linked to the test in Jira using tag with unique identifier
@@ -381,14 +379,16 @@ Each sceanrio should be linked to the test in Jira using tag with unique identif
 ```java
 @TCC-12
   Scenario: Clear all completed todos
-``` 
+
+```
 
 Each Background should be linked to the Precondition in Jira but key should be commented to avoid syntax error
 
 ```java
 #@TCC-17
   Background: I have the following todos on the home page
-```  
+
+```
 
 #### TODO
 
