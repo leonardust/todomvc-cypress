@@ -20,7 +20,7 @@ on:
   pull_request:
 
 env:
-  BROWSER: ${{ github.event.inputs.browser || 'all' }}
+  BROWSER: ${{ github.event.inputs.browser = 'all' && 'matrix.browser' || 'chrome'}}
 
 jobs:
   cypress-run:
@@ -28,11 +28,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        browser:
-          - ${{ github.event.inputs.browser == 'all' && 'chrome' || '' }}
-          - ${{ github.event.inputs.browser == 'all' && 'firefox' || '' }}
-          - ${{ github.event.inputs.browser == 'all' && 'edge' || '' }}
-          - ${{ github.event.inputs.browser != 'all' && github.event.inputs.browser || '' }}
+        browser: [chrome, firefox, edge]
     permissions:
       contents: write
     steps:
@@ -68,7 +64,7 @@ jobs:
       - name: Cypress run on ${{ matrix.browser }}
         uses: cypress-io/github-action@v5
         with:
-          browser: ${{ env.Browser == 'all' && matrix.browser || env.BROWSER != 'all' && env.Browser }}
+          browser: ${{ env.Browser }}
           install-command: npm install
           build: npm run build
           start: npm start
