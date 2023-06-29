@@ -7,7 +7,7 @@ on:
       browser:
         type: choice
         description: Select browser
-        default: chrome
+        default: all
         options:
           - all
           - chrome
@@ -20,7 +20,7 @@ on:
   pull_request:
 
 env:
-  BROWSER: ${{ github.event.inputs.browser || 'chrome'}}
+  BROWSER: ${{ github.event.inputs.browser || 'all'}}
 
 jobs:
   cypress-run:
