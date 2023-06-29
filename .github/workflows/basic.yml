@@ -20,7 +20,7 @@ on:
   pull_request:
 
 env:
-  BROWSER: ${{ github.event.inputs.browser = 'all' && 'matrix.browser' || 'chrome'}}
+  BROWSER: ${{ github.event.inputs.browser == 'all' && 'matrix.browser' || 'chrome'}}
 
 jobs:
   cypress-run:
