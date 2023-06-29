@@ -62,8 +62,7 @@ jobs:
       #     curl -H "Content-Type: multipart/form-data" -X POST -H -u ${{ secrets.JIRA_USER }}:${{ secrets.JIRA_PASSWORD }}  -F "file=@features.zip" ${{ secrets.JIRA_BASE_URL }}/rest/raven/1.0/import/feature?projectKey=TCC
 
       - name: Set artifact name
-        if: env.BROWSER != 'all'
-        run: echo "::set-output name=artifact_name::End-to-end tests (${{ env.BROWSER }})"
+        run: echo "::set-output name=artifact_name::End-to-end tests (${{ matrix.browser }})"
 
       - name: Cypress run on ${{ matrix.browser }}
         uses: cypress-io/github-action@v5
@@ -156,10 +155,6 @@ jobs:
 
   test_single_browser:
     if: env.Browser != 'all'
-    strategy:
-      matrix:
-        browser:
-          - ${{ env.BROWSER }}
     runs-on: ubuntu-22.04
     permissions:
       contents: write
@@ -194,20 +189,7 @@ jobs:
       #     curl -H "Content-Type: multipart/form-data" -X POST -H -u ${{ secrets.JIRA_USER }}:${{ secrets.JIRA_PASSWORD }}  -F "file=@features.zip" ${{ secrets.JIRA_BASE_URL }}/rest/raven/1.0/import/feature?projectKey=TCC
 
       - name: Set artifact name
-        if: env.BROWSER != 'all'
         run: echo "::set-output name=artifact_name::End-to-end tests (${{ env.BROWSER }})"
-
-      - name: Cypress run on ${{ matrix.browser }}
-        uses: cypress-io/github-action@v5
-        with:
-          browser: ${{ matrix.browser }}
-          install-command: npm install
-          build: npm run build
-          start: npm start
-          record: false
-        env:
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Cypress run on ${{ env.BROWSER }}
         uses: cypress-io/github-action@v5
@@ -230,7 +212,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v3
         with:
-          name: cypress-cucumber-report-${{ matrix.browser }}
+          name: cypress-cucumber-report-${{ env.BROWSER }}
           path: cypress/reports/cucumber-report/
 
       - name: Deploy report to gh-pages
@@ -254,7 +236,7 @@ jobs:
           cat testexec_cloud_template.json  | \
           sed s/PROJECT_KEY/${{ secrets.JIRACLOUD_PROJECT_KEY }}/g | \
           sed s/TESTPLAN_KEY/${{ secrets.XRAYCLOUD_TEST_PLAN_KEY }}/g | \
-          sed s/TEST_ENVIRONMENT_NAME/${{ matrix.browser }}/g | \
+          sed s/TEST_ENVIRONMENT_NAME/${{ env.BROWSER }}/g | \
           sed "s/BEGIN_DATE/$(date -u +'%Y-%m-%dT%H:%M:%S.%3NZ')/g" | \
           sed "s/END_DATE/$(date -u +'%Y-%m-%dT%H:%M:%S.%3NZ')/g" > test_exec.json
 
