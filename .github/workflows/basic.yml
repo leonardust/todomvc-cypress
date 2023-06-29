@@ -23,14 +23,13 @@ on:
 env:
   BROWSER: ${{ github.event.inputs.browser || "all" }}
 
-
 jobs:
   cypress-run:
     runs-on: ubuntu-22.04
     strategy:
       fail-fast: false
       matrix:
-        browser: [${{ github.event.inputs.browser == "all" ? [chrome, firefox, edge] : [github.event.inputs.browser] }}]
+        browser: ${{ github.event.inputs.browser == "all" && ["chrome", "firefox", "edge"] || [github.event.inputs.browser] }}
     permissions:
       contents: write
     steps:
