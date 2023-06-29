@@ -30,7 +30,7 @@ jobs:
       matrix:
         browser: 
           - ${{ env.BROWSER }}
-    if: ${{ env.BROWSER == 'all'}}  
+      if: ${{ env.BROWSER == 'all'}}  
       matrix:
         browser: 
           - chrome 
