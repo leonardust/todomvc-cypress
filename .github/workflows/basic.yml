@@ -7,7 +7,7 @@ on:
       browser:
         type: choice
         description: Select browser
-        default: all
+        default: chrome
         options:
           - all
           - chrome
@@ -20,7 +20,7 @@ on:
   pull_request:
 
 env:
-  BROWSER: ${{ github.event.inputs.browser == 'all' && 'matrix.browser' || 'chrome'}}
+  BROWSER: ${{ github.event.inputs.browser || 'chrome'}}
 
 jobs:
   cypress-run:
@@ -64,7 +64,7 @@ jobs:
       - name: Cypress run on ${{ matrix.browser }}
         uses: cypress-io/github-action@v5
         with:
-          browser: ${{ env.Browser }}
+          browser: ${{ matrix.browser' && env.Browser == 'all || env.BROWSER }}
           install-command: npm install
           build: npm run build
           start: npm start
