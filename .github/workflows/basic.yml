@@ -61,6 +61,10 @@ jobs:
       #     zip -r features.zip cypress/e2e/ -i \*.feature
       #     curl -H "Content-Type: multipart/form-data" -X POST -H -u ${{ secrets.JIRA_USER }}:${{ secrets.JIRA_PASSWORD }}  -F "file=@features.zip" ${{ secrets.JIRA_BASE_URL }}/rest/raven/1.0/import/feature?projectKey=TCC
 
+      - name: Set artifact name
+        if: env.BROWSER != 'all'
+        run: echo "::set-output name=artifact_name::End-to-end tests (${{ env.BROWSER }})"
+
       - name: Cypress run on ${{ matrix.browser }}
         if: env.BROWSER == 'all'
         uses: cypress-io/github-action@v5
@@ -96,7 +100,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v3
         with:
-          name: cypress-cucumber-report
+          name: ${{ env.artifact_name }}
           path: cypress/reports/cucumber-report/
 
       - name: Deploy report to gh-pages
@@ -115,7 +119,7 @@ jobs:
       #     -F results_file=@./cypress/reports/cucumber-json/cucumber-report.json \
       #     -F language=js
 
-      - name: Generate auxiliary JSON to define some fields on the Test Execution to be created
+      - name: Generate auxiliary JSON to define some fields on the Test Execution to be created ${{ matrix.browser}}
         if: env.BROWSER == 'all'
         run: |
           cat testexec_cloud_template.json  | \
@@ -125,7 +129,7 @@ jobs:
           sed "s/BEGIN_DATE/$(date -u +'%Y-%m-%dT%H:%M:%S.%3NZ')/g" | \
           sed "s/END_DATE/$(date -u +'%Y-%m-%dT%H:%M:%S.%3NZ')/g" > test_exec.json
 
-      - name: Generate auxiliary JSON to define some fields on the Test Execution to be created
+      - name: Generate auxiliary JSON to define some fields on the Test Execution to be created ${{ env.BROWSER }}
         if: env.BROWSER != 'all'
         run: |
           cat testexec_cloud_template.json  | \
