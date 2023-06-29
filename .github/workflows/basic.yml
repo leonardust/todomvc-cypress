@@ -10,7 +10,6 @@ on:
         default: all
         options:
           - all
-          - electron
           - chrome
           - firefox
           - edge
@@ -29,7 +28,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        browser: ${{ github.event.inputs.browser == 'all' && ['chrome', 'firefox', 'edge'] || [github.event.inputs.browser] }}
+        browser: [chrome, firefox, edge]
     permissions:
       contents: write
     steps:
@@ -65,7 +64,7 @@ jobs:
       - name: Cypress run on ${{ matrix.browser }}
         uses: cypress-io/github-action@v5
         with:
-          browser: ${{ matrix.browser || env.BROWSER }}
+          browser: ${{ env.Browser == 'all' && matrix.browser || env.BROWSER }}
           install-command: npm install
           build: npm run build
           start: npm start
@@ -108,7 +107,7 @@ jobs:
           cat testexec_cloud_template.json  | \
           sed s/PROJECT_KEY/${{ secrets.JIRACLOUD_PROJECT_KEY }}/g | \
           sed s/TESTPLAN_KEY/${{ secrets.XRAYCLOUD_TEST_PLAN_KEY }}/g | \
-          sed s/TEST_ENVIRONMENT_NAME/${{ matrix.browser || env.BROWSER }}/g | \
+          sed s/TEST_ENVIRONMENT_NAME/${{ env.Browser == 'all' && matrix.browser || env.BROWSER }}/g | \
           sed "s/BEGIN_DATE/$(date -u +'%Y-%m-%dT%H:%M:%S.%3NZ')/g" | \
           sed "s/END_DATE/$(date -u +'%Y-%m-%dT%H:%M:%S.%3NZ')/g" > test_exec.json
 
