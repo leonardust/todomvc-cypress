@@ -738,27 +738,25 @@ input#darkCheck:checked ~ label>svg#moon {
                         
                             <span class="tag">@regression</span>
                         
-                            <span class="tag">@home-page</span>
+                            <span class="tag">@add-todo</span>
                         
-                            <span class="tag">@REQ_TCC-8</span>
+                            <span class="tag">@REQ_TCC-6</span>
                         
-                            <span class="tag">@TCC-20</span>
-                        
-                            <span class="tag">@TCC-21</span>
+                            <span class="tag">@TCC-11</span>
                         
                     
                 
             </div>
             <h1>Feature:
-                <small>Home page</small>
+                <small>Add a todo</small>
             </h1>
             
                 <p>
                <p><strong>File name:</strong>
-                    home-page.feature
+                    add-todo.feature
                 </p>
                 <p><strong>Relative path:</strong>
-                    e2e/home-page.feature</p>
+                    e2e/add-todo.feature</p>
             
         </div>
 
@@ -828,7 +826,7 @@ input#darkCheck:checked ~ label>svg#moon {
         
             <tr>
                 <th> Total duration:</th>
-                <tr><td>00:00:00.536</td></tr>
+                <tr><td>00:00:01.750</td></tr>
             </tr>
         
     </table>
@@ -870,7 +868,7 @@ input#darkCheck:checked ~ label>svg#moon {
             </li>
             <li>
                 <span class="meta-data-title">Device</span>
-                <span class="meta-data-data">fv-az950-163</span>
+                <span class="meta-data-data">fv-az502-91</span>
             </li>
             <li>
                 <span class="meta-data-title">OS</span>
@@ -953,17 +951,17 @@ input#darkCheck:checked ~ label>svg#moon {
                             
                                 <span class="tag">@regression</span>
                             
-                                <span class="tag">@home-page</span>
+                                <span class="tag">@add-todo</span>
                             
-                                <span class="tag">@REQ_TCC-8</span>
+                                <span class="tag">@REQ_TCC-6</span>
                             
-                                <span class="tag">@TCC-20</span>
+                                <span class="tag">@TCC-11</span>
                             
                         
                     
                 </div>
 
-                <h2>Scenario: <small>See the home page</small></h2>
+                <h2>Scenario Outline: <small>Add my first todo First example todo</small></h2>
 
                 <ul class="nav navbar-right panel_toolbox">
                     <li>
@@ -980,7 +978,7 @@ input#darkCheck:checked ~ label>svg#moon {
 
                     
                         <li>
-                            <span class="step passed-background" data-toggle="tooltip" title="Scenario passed">2</span>
+                            <span class="step passed-background" data-toggle="tooltip" title="Scenario passed">5</span>
                         </li>
                     
 
@@ -989,7 +987,7 @@ input#darkCheck:checked ~ label>svg#moon {
                     
                         <li>
                             <span style="font-size:1.2em"> Duration:</span>
-                            <span style=padding-right:5em>00:00:00.318</span>
+                            <span style=padding-right:5em>00:00:01.113</span>
                         </li>
                     
                 </ul>
@@ -1012,7 +1010,71 @@ input#darkCheck:checked ~ label>svg#moon {
                                 
 
                                 <div class="text">
-                                    <span class="keyword highlight">When </span>
+                                    <span class="keyword highlight">Given </span>
+
+                                    
+                                        I have no todos
+                                        
+                                    
+
+                                    
+                                        
+                                            <span class="duration">00:00:00.493</span>
+                                        
+                                    
+
+                                </div>
+
+                                
+                                    
+
+                                    
+
+                                    
+                                    
+                                    
+
+                                    
+
+                                    
+
+                                    
+                                
+                            </div>
+
+                        
+                            
+
+                            
+
+                            
+
+                            
+
+                            
+
+                            
+                        
+
+                        
+                            
+                        
+
+                    
+                
+                        
+                            <div class="scenario-step-container">
+
+                                
+                                    
+                                        <div class="label" title="Success">
+                                            <i class="fa fa-check-circle fa-2x passed-color" data-toggle="tooltip" data-placement="top" title="Step passed"></i>
+                                        </div>
+                                    
+                                
+
+                                <div class="text">
+                                    <span class="keyword highlight">And </span>
 
                                     
                                         I navigate to the home page
@@ -1021,7 +1083,71 @@ input#darkCheck:checked ~ label>svg#moon {
 
                                     
                                         
-                                            <span class="duration">00:00:00.301</span>
+                                            <span class="duration">00:00:00.176</span>
+                                        
+                                    
+
+                                </div>
+
+                                
+                                    
+
+                                    
+
+                                    
+                                    
+                                    
+
+                                    
+
+                                    
+
+                                    
+                                
+                            </div>
+
+                        
+                            
+
+                            
+
+                            
+
+                            
+
+                            
+
+                            
+                        
+
+                        
+                            
+                        
+
+                    
+                
+                        
+                            <div class="scenario-step-container">
+
+                                
+                                    
+                                        <div class="label" title="Success">
+                                            <i class="fa fa-check-circle fa-2x passed-color" data-toggle="tooltip" data-placement="top" title="Step passed"></i>
+                                        </div>
+                                    
+                                
+
+                                <div class="text">
+                                    <span class="keyword highlight">When </span>
+
+                                    
+                                        I submit "First example todo" for my new todo title
+                                        
+                                    
+
+                                    
+                                        
+                                            <span class="duration">00:00:00.408</span>
                                         
                                     
 
@@ -1079,7 +1205,100 @@ input#darkCheck:checked ~ label>svg#moon {
                                     <span class="keyword highlight">Then </span>
 
                                     
-                                        I see the home page
+                                        I see the following todos:
+                                        
+                                    
+
+                                    
+                                        
+                                            <span class="duration">00:00:00.019</span>
+                                        
+                                    
+
+                                </div>
+
+                                
+                                    
+
+                                    
+
+                                    
+                                    
+                                    
+
+                                    
+
+                                    
+
+                                    
+                                
+                            </div>
+
+                        
+                            
+
+                            
+
+                            
+
+                            
+
+                            
+
+                            
+                        
+
+                        
+                            
+                                <div class="scenario-scroll-bar">
+                                    
+                                        <table class="table arguments">
+                                            
+                                            <tr>
+                                                
+                                                
+                                                    <th>title</th>
+                                                
+                                                    <th>completed</th>
+                                                
+                                            </tr>
+
+                                            
+                                                <tr>
+                                                    
+                                                    
+                                                        <td>First example todo</td>
+                                                    
+                                                        <td>false</td>
+                                                    
+                                                </tr>
+                                            
+                                        </table>
+                                    
+                                </div>
+
+                                
+                            
+                        
+
+                    
+                
+                        
+                            <div class="scenario-step-container">
+
+                                
+                                    
+                                        <div class="label" title="Success">
+                                            <i class="fa fa-check-circle fa-2x passed-color" data-toggle="tooltip" data-placement="top" title="Step passed"></i>
+                                        </div>
+                                    
+                                
+
+                                <div class="text">
+                                    <span class="keyword highlight">And </span>
+
+                                    
+                                        I see that I have "1 item left"
                                         
                                     
 
@@ -1146,17 +1365,17 @@ input#darkCheck:checked ~ label>svg#moon {
                             
                                 <span class="tag">@regression</span>
                             
-                                <span class="tag">@home-page</span>
+                                <span class="tag">@add-todo</span>
                             
-                                <span class="tag">@REQ_TCC-8</span>
+                                <span class="tag">@REQ_TCC-6</span>
                             
-                                <span class="tag">@TCC-21</span>
+                                <span class="tag">@TCC-11</span>
                             
                         
                     
                 </div>
 
-                <h2>Scenario: <small>See my existing todos</small></h2>
+                <h2>Scenario Outline: <small>Add my first todo Second example todo</small></h2>
 
                 <ul class="nav navbar-right panel_toolbox">
                     <li>
@@ -1173,7 +1392,7 @@ input#darkCheck:checked ~ label>svg#moon {
 
                     
                         <li>
-                            <span class="step passed-background" data-toggle="tooltip" title="Scenario passed">4</span>
+                            <span class="step passed-background" data-toggle="tooltip" title="Scenario passed">5</span>
                         </li>
                     
 
@@ -1182,7 +1401,7 @@ input#darkCheck:checked ~ label>svg#moon {
                     
                         <li>
                             <span style="font-size:1.2em"> Duration:</span>
-                            <span style=padding-right:5em>00:00:00.218</span>
+                            <span style=padding-right:5em>00:00:00.637</span>
                         </li>
                     
                 </ul>
@@ -1208,13 +1427,13 @@ input#darkCheck:checked ~ label>svg#moon {
                                     <span class="keyword highlight">Given </span>
 
                                     
-                                        I have the following todos:
+                                        I have no todos
                                         
                                     
 
                                     
                                         
-                                            <span class="duration">00:00:00.103</span>
+                                            <span class="duration">00:00:00.139</span>
                                         
                                     
 
@@ -1253,43 +1472,69 @@ input#darkCheck:checked ~ label>svg#moon {
 
                         
                             
-                                <div class="scenario-scroll-bar">
-                                    
-                                        <table class="table arguments">
-                                            
-                                            <tr>
-                                                
-                                                
-                                                    <th>title</th>
-                                                
-                                                    <th>completed</th>
-                                                
-                                            </tr>
+                        
 
-                                            
-                                                <tr>
-                                                    
-                                                    
-                                                        <td>A test todo</td>
-                                                    
-                                                        <td>false</td>
-                                                    
-                                                </tr>
-                                            
-                                                <tr>
-                                                    
-                                                    
-                                                        <td>Another test todo</td>
-                                                    
-                                                        <td>true</td>
-                                                    
-                                                </tr>
-                                            
-                                        </table>
+                    
+                
+                        
+                            <div class="scenario-step-container">
+
+                                
                                     
+                                        <div class="label" title="Success">
+                                            <i class="fa fa-check-circle fa-2x passed-color" data-toggle="tooltip" data-placement="top" title="Step passed"></i>
+                                        </div>
+                                    
+                                
+
+                                <div class="text">
+                                    <span class="keyword highlight">And </span>
+
+                                    
+                                        I navigate to the home page
+                                        
+                                    
+
+                                    
+                                        
+                                            <span class="duration">00:00:00.127</span>
+                                        
+                                    
+
                                 </div>
 
                                 
+                                    
+
+                                    
+
+                                    
+                                    
+                                    
+
+                                    
+
+                                    
+
+                                    
+                                
+                            </div>
+
+                        
+                            
+
+                            
+
+                            
+
+                            
+
+                            
+
+                            
+                        
+
+                        
                             
                         
 
@@ -1310,13 +1555,13 @@ input#darkCheck:checked ~ label>svg#moon {
                                     <span class="keyword highlight">When </span>
 
                                     
-                                        I navigate to the home page
+                                        I submit "Second example todo" for my new todo title
                                         
                                     
 
                                     
                                         
-                                            <span class="duration">00:00:00.082</span>
+                                            <span class="duration">00:00:00.345</span>
                                         
                                     
 
@@ -1380,7 +1625,7 @@ input#darkCheck:checked ~ label>svg#moon {
 
                                     
                                         
-                                            <span class="duration">00:00:00.020</span>
+                                            <span class="duration">00:00:00.014</span>
                                         
                                     
 
@@ -1436,18 +1681,9 @@ input#darkCheck:checked ~ label>svg#moon {
                                                 <tr>
                                                     
                                                     
-                                                        <td>A test todo</td>
+                                                        <td>Second example todo</td>
                                                     
                                                         <td>false</td>
-                                                    
-                                                </tr>
-                                            
-                                                <tr>
-                                                    
-                                                    
-                                                        <td>Another test todo</td>
-                                                    
-                                                        <td>true</td>
                                                     
                                                 </tr>
                                             
@@ -1482,7 +1718,7 @@ input#darkCheck:checked ~ label>svg#moon {
 
                                     
                                         
-                                            <span class="duration">00:00:00.013</span>
+                                            <span class="duration">00:00:00.012</span>
                                         
                                     
 
