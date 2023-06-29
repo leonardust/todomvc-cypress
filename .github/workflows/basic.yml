@@ -32,7 +32,10 @@ jobs:
           - ${{ env.BROWSER }}
     if: ${{ env.BROWSER == 'all'}}  
       matrix:
-        browser: [chrome, firefox, edge]
+        browser: 
+          - chrome 
+          - firefox 
+          - edge
     permissions:
       contents: write
     steps:
