@@ -28,14 +28,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        browser: 
+        browser:
           - ${{ env.BROWSER }}
-      if: ${{ env.BROWSER == 'all'}}  
-      matrix:
-        browser: 
-          - chrome 
-          - firefox 
-          - edge
+          - ${{ if(env.BROWSER == 'all') }}chrome
+          - ${{ if(env.BROWSER == 'all') }}firefox
+          - ${{ if(env.BROWSER == 'all') }}edge
     permissions:
       contents: write
     steps:
