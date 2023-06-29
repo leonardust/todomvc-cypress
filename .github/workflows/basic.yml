@@ -7,8 +7,9 @@ on:
       browser:
         type: choice
         description: Select browser
-        default: chrome
+        default: all
         options:
+          - all
           - electron
           - chrome
           - firefox
@@ -20,7 +21,8 @@ on:
   pull_request:
 
 env:
-  BROWSER: ${{ github.event.inputs.browser || 'chrome' }}
+  BROWSER: ${{ github.event.inputs.browser || "all" }}
+
 
 jobs:
   cypress-run:
@@ -28,7 +30,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        browser: [chrome, firefox, edge]
+        browser: [${{ github.event.inputs.browser == "all" ? [chrome, firefox, edge] : [github.event.inputs.browser] }}]
     permissions:
       contents: write
     steps:
