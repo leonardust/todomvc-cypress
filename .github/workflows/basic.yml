@@ -24,7 +24,7 @@ env:
 
 jobs:
   test_all_browsers:
-    if: env.Browser == 'all'
+    if: ${{ env.Browser }} == 'all'
     strategy:
       matrix:
         browser: [chrome, firefox, edge]
@@ -79,7 +79,7 @@ jobs:
       - name: Cypress run on ${{ matrix.browser }}
         uses: cypress-io/github-action@v5
         with:
-          browser: ${{ env.BROWSER }}
+          browser: ${{ matrix.browser }}
           install-command: npm install
           build: npm run build
           start: npm start
@@ -154,7 +154,7 @@ jobs:
           echo "[View run in Cucumber Report](https://leonardust.github.io/todomvc-cypress-cucumber/)" >> $GITHUB_STEP_SUMMARY
 
   test_single_browser:
-    if: env.Browser != 'all'
+    if: ${{ env.Browser }} != 'all'
     runs-on: ubuntu-22.04
     permissions:
       contents: write
