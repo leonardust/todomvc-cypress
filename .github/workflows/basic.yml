@@ -24,7 +24,7 @@ env:
 
 jobs:
   test_all_browsers:
-    if: ${{ env.BROWSER }}  == 'all'
+    if: ${{ env.BROWSER == 'all' }}
     strategy:
       matrix:
         browser: [chrome, firefox, edge]
@@ -154,7 +154,7 @@ jobs:
           echo "[View run in Cucumber Report](https://leonardust.github.io/todomvc-cypress-cucumber/)" >> $GITHUB_STEP_SUMMARY
 
   test_single_browser:
-    if: ${{ env.BROWSER }} != 'all'
+    if: ${{ env.BROWSER != 'all' }}
     runs-on: ubuntu-22.04
     permissions:
       contents: write
