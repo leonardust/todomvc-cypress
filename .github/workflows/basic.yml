@@ -62,9 +62,23 @@ jobs:
       #     curl -H "Content-Type: multipart/form-data" -X POST -H -u ${{ secrets.JIRA_USER }}:${{ secrets.JIRA_PASSWORD }}  -F "file=@features.zip" ${{ secrets.JIRA_BASE_URL }}/rest/raven/1.0/import/feature?projectKey=TCC
 
       - name: Cypress run on ${{ matrix.browser }}
+        if: env.BROWSER == 'all'
         uses: cypress-io/github-action@v5
         with:
-          browser: ${{ env.Browser == 'all' && matrix.browser || env.BROWSER }}
+          browser: ${{ matrix.browser }}
+          install-command: npm install
+          build: npm run build
+          start: npm start
+          record: false
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Cypress run on ${{ env.BROWSER }}
+        if: env.BROWSER != 'all'
+        uses: cypress-io/github-action@v5
+        with:
+          browser: ${{ env.BROWSER }}
           install-command: npm install
           build: npm run build
           start: npm start
@@ -102,12 +116,26 @@ jobs:
       #     -F language=js
 
       - name: Generate auxiliary JSON to define some fields on the Test Execution to be created
-        if: always()
+        if: |
+          always()
+          env.BROWSER == 'all'
         run: |
           cat testexec_cloud_template.json  | \
           sed s/PROJECT_KEY/${{ secrets.JIRACLOUD_PROJECT_KEY }}/g | \
           sed s/TESTPLAN_KEY/${{ secrets.XRAYCLOUD_TEST_PLAN_KEY }}/g | \
-          sed s/TEST_ENVIRONMENT_NAME/${{ env.Browser == 'all' && matrix.browser || env.BROWSER }}/g | \
+          sed s/TEST_ENVIRONMENT_NAME/${{ matrix.browser }}/g | \
+          sed "s/BEGIN_DATE/$(date -u +'%Y-%m-%dT%H:%M:%S.%3NZ')/g" | \
+          sed "s/END_DATE/$(date -u +'%Y-%m-%dT%H:%M:%S.%3NZ')/g" > test_exec.json
+
+      - name: Generate auxiliary JSON to define some fields on the Test Execution to be created
+        if: |
+          always()
+          env.BROWSER != 'all'
+        run: |
+          cat testexec_cloud_template.json  | \
+          sed s/PROJECT_KEY/${{ secrets.JIRACLOUD_PROJECT_KEY }}/g | \
+          sed s/TESTPLAN_KEY/${{ secrets.XRAYCLOUD_TEST_PLAN_KEY }}/g | \
+          sed s/TEST_ENVIRONMENT_NAME/${{ env.Browser }}/g | \
           sed "s/BEGIN_DATE/$(date -u +'%Y-%m-%dT%H:%M:%S.%3NZ')/g" | \
           sed "s/END_DATE/$(date -u +'%Y-%m-%dT%H:%M:%S.%3NZ')/g" > test_exec.json
 
