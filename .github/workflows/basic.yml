@@ -28,7 +28,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        browser: [chrome, firefox, edge]
+        browser:
+          - ${{ github.event.inputs.browser == 'all' && 'chrome' || '' }}
+          - ${{ github.event.inputs.browser == 'all' && 'firefox' || '' }}
+          - ${{ github.event.inputs.browser == 'all' && 'edge' || '' }}
+          - ${{ github.event.inputs.browser != 'all' && github.event.inputs.browser || '' }}
     permissions:
       contents: write
     steps:
