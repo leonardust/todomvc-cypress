@@ -100,7 +100,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ env.artifact_name }}
+          name: cypress-cucumber-report-${{ matrix.browser }}
           path: cypress/reports/cucumber-report/
 
       - name: Deploy report to gh-pages
