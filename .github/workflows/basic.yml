@@ -27,12 +27,11 @@ jobs:
     runs-on: ubuntu-22.04
     strategy:
       fail-fast: false
-      if: ${{ env.BROWSER == 'all'}}
+      matrix:
+        browser: [${{ env.BROWSER }}]
+      if: ${{ env.BROWSER == 'all'}}  
       matrix:
         browser: [chrome, firefox, edge]
-      if: ${{ env.BROWSER != 'all'}}  
-      matrix:
-        browser: [env.BROWSER]
     permissions:
       contents: write
     steps:
