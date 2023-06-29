@@ -28,8 +28,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        browser: [${{ env.BROWSER }}]
-      if: ${{ env.BROWSER == 'all'}}  
+        browser: 
+          - ${{ env.BROWSER }}
+    if: ${{ env.BROWSER == 'all'}}  
       matrix:
         browser: [chrome, firefox, edge]
     permissions:
