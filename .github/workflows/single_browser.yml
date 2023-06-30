@@ -11,6 +11,8 @@ on:
           - firefox
           - edge
 
+  pull_request:
+
 env:
   BROWSER: ${{ github.event.inputs.browser || 'chrome'}}
 
@@ -49,7 +51,6 @@ jobs:
       #     curl -H "Content-Type: multipart/form-data" -X POST -H -u ${{ secrets.JIRA_USER }}:${{ secrets.JIRA_PASSWORD }}  -F "file=@features.zip" ${{ secrets.JIRA_BASE_URL }}/rest/raven/1.0/import/feature?projectKey=TCC
 
       - name: Set artifact name
-        if: env.BROWSER != 'all'
         run: echo "::set-output name=artifact_name::End-to-end tests (${{ env.BROWSER }})"
 
       - name: Cypress run on single browser - ${{ env.BROWSER }}
