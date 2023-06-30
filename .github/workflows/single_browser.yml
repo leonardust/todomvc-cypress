@@ -11,8 +11,6 @@ on:
           - firefox
           - edge
 
-  pull_request:
-
 env:
   BROWSER: ${{ github.event.inputs.browser || 'chrome'}}
 
@@ -93,7 +91,7 @@ jobs:
       #     -F results_file=@./cypress/reports/cucumber-json/cucumber-report.json \
       #     -F language=js
 
-      - name: Generate auxiliary JSON to define some fields on the Test Execution to be created - ${{ env.BROWSER }}
+      - name: Generate auxiliary JSON to define some fields on the Test Execution to be created
         if: env.BROWSER != 'all'
         run: |
           cat testexec_cloud_template.json  | \
