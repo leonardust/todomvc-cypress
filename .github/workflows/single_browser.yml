@@ -90,7 +90,7 @@ jobs:
       #     -F language=js
 
       - name: Generate auxiliary JSON to define some fields on the Test Execution to be created
-        if: env.BROWSER != 'all'
+        if: always()
         run: |
           cat testexec_cloud_template.json  | \
           sed s/PROJECT_KEY/${{ secrets.JIRACLOUD_PROJECT_KEY }}/g | \
