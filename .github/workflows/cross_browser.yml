@@ -1,4 +1,4 @@
-name: End-to-end tests
+name: End-to-end tests cross browser
 on:
   schedule:
     - cron: "0 0 * * *"
@@ -7,12 +7,9 @@ on:
       browser:
         type: choice
         description: Select browser
-        default: chrome
+        default: all
         options:
-          - electron
-          - chrome
-          - firefox
-          - edge
+          - all
 
   push:
     branches: [main]
@@ -20,11 +17,15 @@ on:
   pull_request:
 
 env:
-  BROWSER: ${{ github.event.inputs.browser || 'chrome' }}
+  BROWSER: ${{ github.event.inputs.browser || 'all'}}
 
 jobs:
   cypress-run:
     runs-on: ubuntu-22.04
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chrome, firefox, edge]
     permissions:
       contents: write
     steps:
@@ -42,8 +43,7 @@ jobs:
       - name: Generate auxiliary JSON for authenticating with Xray cloud and obtain token
         run: |
           cat cloud_auth.json.sample | sed s/CLIENT_ID/${{ secrets.XRAYCLOUD_CLIENT_ID }}/g | sed s/CLIENT_SECRET/${{ secrets.XRAYCLOUD_CLIENT_SECRET }}/g > cloud_auth.json
-          echo token=$(curl -H "Content-Type: application/json" -X POST --data @"cloud_auth.json" ${{ secrets.XRAYCLOUD_BASE_URL }}/api/v1/authenticate| tr -d '"') >> $GITHUB_ENV
-
+          echo token=$(curl -H "Content-Type: application/json" -X POST --data @"cloud_auth.json" ${{ secrets.XRAYCLOUD_BASE_URL }}/api/v1/authenticate| tr -d '"') >> $GITHUB_ENV
       # - name: Export scenarios from Xray and generate .feature file(s)
       #   run: |
       #     FEATURES_FILE=features.zip
@@ -57,10 +57,10 @@ jobs:
       #     zip -r features.zip cypress/e2e/ -i \*.feature
       #     curl -H "Content-Type: multipart/form-data" -X POST -H -u ${{ secrets.JIRA_USER }}:${{ secrets.JIRA_PASSWORD }}  -F "file=@features.zip" ${{ secrets.JIRA_BASE_URL }}/rest/raven/1.0/import/feature?projectKey=TCC
 
-      - name: Cypress run
+      - name: Cypress run on ${{ matrix.browser }}
         uses: cypress-io/github-action@v5
         with:
-          browser: ${{env.BROWSER || 'chrome'}}
+          browser: ${{ matrix.browser }}
           install-command: npm install
           build: npm run build
           start: npm start
@@ -78,15 +78,15 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v3
         with:
-          name: cypress-cucumber-report
+          name: cypress-cucumber-report-${{ matrix.browser }}
           path: cypress/reports/cucumber-report/
 
-      - name: Deploy report to gh-pages
-        if: always()
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./cypress/reports/cucumber-report
+      # - name: Deploy report to gh-pages
+      #   if: always()
+      #   uses: peaceiris/actions-gh-pages@v3
+      #   with:
+      #     github_token: ${{ secrets.GITHUB_TOKEN }}
+      #     publish_dir: ./cypress/reports/cucumber-report
 
       # - name: Push results to Cucumber for Jira
       #   if: always()
@@ -98,12 +98,12 @@ jobs:
       #     -F language=js
 
       - name: Generate auxiliary JSON to define some fields on the Test Execution to be created
-        if: always()
+        if: env.BROWSER == 'all'
         run: |
           cat testexec_cloud_template.json  | \
           sed s/PROJECT_KEY/${{ secrets.JIRACLOUD_PROJECT_KEY }}/g | \
           sed s/TESTPLAN_KEY/${{ secrets.XRAYCLOUD_TEST_PLAN_KEY }}/g | \
-          sed s/TEST_ENVIRONMENT_NAME/${{ env.BROWSER }}/g | \
+          sed s/TEST_ENVIRONMENT_NAME/${{ matrix.browser }}/g | \
           sed "s/BEGIN_DATE/$(date -u +'%Y-%m-%dT%H:%M:%S.%3NZ')/g" | \
           sed "s/END_DATE/$(date -u +'%Y-%m-%dT%H:%M:%S.%3NZ')/g" > test_exec.json
 
@@ -119,7 +119,6 @@ jobs:
           -F info=@test_exec.json \
           -F results=@"./cypress/reports/cucumber-json/cucumber-report.json" \
           "${{ secrets.XRAYCLOUD_BASE_URL }}/api/v1/import/execution/cucumber/multipart"
-
       # - name: "Import results to Xray using GH action"
       #   uses: mikepenz/xray-action@v2.3.0
       #   with:
@@ -130,7 +129,7 @@ jobs:
       #     testPaths: "./cypress/reports/cucumber-json/cucumber-report.json"
       #     testExecutionJson: "test_exec.json"
 
-      - name: Write summary
-        if: always()
-        run: |
-          echo "[View run in Cucumber Report](https://leonardust.github.io/todomvc-cypress-cucumber/)" >> $GITHUB_STEP_SUMMARY
+      # - name: Write summary
+      #   if: always()
+      #   run: |
+      #     echo "[View run in Cucumber Report](https://leonardust.github.io/todomvc-cypress-cucumber/)" >> $GITHUB_STEP_SUMMARY

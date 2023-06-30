@@ -3,7 +3,7 @@
     "project": {
       "key": "PROJECT_KEY"
     },
-    "summary": "Test Execution for cucumber execution",
+    "summary": "Cucumber test execution - TEST_ENVIRONMENT_NAME",
     "issuetype": {
       "name": "Test Execution"
     }
