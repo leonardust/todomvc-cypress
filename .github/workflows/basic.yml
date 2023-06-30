@@ -24,13 +24,14 @@ env:
 
 jobs:
   test_all_browsers:
+    if: ${{ github.event.inputs.browser == 'all' }}
     strategy:
       matrix:
         browser: [chrome, firefox, edge]
     runs-on: ubuntu-22.04
     permissions:
       contents: write
-    if: ${{ github.event.inputs.browser == 'all' }}
+
     steps:
       - name: Clear npm cache
         run: npm cache clean --force
@@ -154,10 +155,11 @@ jobs:
           echo "[View run in Cucumber Report](https://leonardust.github.io/todomvc-cypress-cucumber/)" >> $GITHUB_STEP_SUMMARY
 
   test_single_browser:
+    if: ${{ github.event.inputs.browser != 'all' }}
     runs-on: ubuntu-22.04
     permissions:
       contents: write
-    if: ${{ github.event.inputs.browser != 'all' }}
+
     steps:
       - name: Clear npm cache
         run: npm cache clean --force
