@@ -1,4 +1,4 @@
-name: End-to-end tests
+name: End-to-end tests cross browser
 on:
   schedule:
     - cron: "0 0 * * *"
@@ -10,9 +10,6 @@ on:
         default: all
         options:
           - all
-          - chrome
-          - firefox
-          - edge
 
   push:
     branches: [main]
@@ -64,24 +61,10 @@ jobs:
         if: env.BROWSER != 'all'
         run: echo "::set-output name=artifact_name::End-to-end tests (${{ env.BROWSER }})"
 
-      - name: Cypress run on ${{ matrix.browser }}
-        if: env.BROWSER == 'all'
+      - name: Cypress run on crossbrowser mode, browser - ${{ matrix.browser }}
         uses: cypress-io/github-action@v5
         with:
           browser: ${{ matrix.browser }}
-          install-command: npm install
-          build: npm run build
-          start: npm start
-          record: false
-        env:
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Cypress run on ${{ env.BROWSER }}
-        if: env.BROWSER != 'all'
-        uses: cypress-io/github-action@v5
-        with:
-          browser: ${{ env.BROWSER }}
           install-command: npm install
           build: npm run build
           start: npm start
@@ -102,12 +85,12 @@ jobs:
           name: cypress-cucumber-report-${{ matrix.browser }}
           path: cypress/reports/cucumber-report/
 
-      - name: Deploy report to gh-pages
-        if: always()
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./cypress/reports/cucumber-report
+      # - name: Deploy report to gh-pages
+      #   if: always()
+      #   uses: peaceiris/actions-gh-pages@v3
+      #   with:
+      #     github_token: ${{ secrets.GITHUB_TOKEN }}
+      #     publish_dir: ./cypress/reports/cucumber-report
 
       # - name: Push results to Cucumber for Jira
       #   if: always()
@@ -118,23 +101,13 @@ jobs:
       #     -F results_file=@./cypress/reports/cucumber-json/cucumber-report.json \
       #     -F language=js
 
-      - name: Generate auxiliary JSON to define some fields on the Test Execution to be created ${{ matrix.browser}}
+      - name: Generate auxiliary JSON to define some fields on the Test Execution to be created - ${{ matrix.browser}}
         if: env.BROWSER == 'all'
         run: |
           cat testexec_cloud_template.json  | \
           sed s/PROJECT_KEY/${{ secrets.JIRACLOUD_PROJECT_KEY }}/g | \
           sed s/TESTPLAN_KEY/${{ secrets.XRAYCLOUD_TEST_PLAN_KEY }}/g | \
           sed s/TEST_ENVIRONMENT_NAME/${{ matrix.browser }}/g | \
-          sed "s/BEGIN_DATE/$(date -u +'%Y-%m-%dT%H:%M:%S.%3NZ')/g" | \
-          sed "s/END_DATE/$(date -u +'%Y-%m-%dT%H:%M:%S.%3NZ')/g" > test_exec.json
-
-      - name: Generate auxiliary JSON to define some fields on the Test Execution to be created ${{ env.BROWSER }}
-        if: env.BROWSER != 'all'
-        run: |
-          cat testexec_cloud_template.json  | \
-          sed s/PROJECT_KEY/${{ secrets.JIRACLOUD_PROJECT_KEY }}/g | \
-          sed s/TESTPLAN_KEY/${{ secrets.XRAYCLOUD_TEST_PLAN_KEY }}/g | \
-          sed s/TEST_ENVIRONMENT_NAME/${{ env.Browser }}/g | \
           sed "s/BEGIN_DATE/$(date -u +'%Y-%m-%dT%H:%M:%S.%3NZ')/g" | \
           sed "s/END_DATE/$(date -u +'%Y-%m-%dT%H:%M:%S.%3NZ')/g" > test_exec.json
 
@@ -160,7 +133,7 @@ jobs:
       #     testPaths: "./cypress/reports/cucumber-json/cucumber-report.json"
       #     testExecutionJson: "test_exec.json"
 
-      - name: Write summary
-        if: always()
-        run: |
-          echo "[View run in Cucumber Report](https://leonardust.github.io/todomvc-cypress-cucumber/)" >> $GITHUB_STEP_SUMMARY
+      # - name: Write summary
+      #   if: always()
+      #   run: |
+      #     echo "[View run in Cucumber Report](https://leonardust.github.io/todomvc-cypress-cucumber/)" >> $GITHUB_STEP_SUMMARY
